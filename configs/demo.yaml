@@ -1,0 +1,60 @@
+data:
+  source: binance
+  binance:
+    base_url: https://api.binance.com
+    proxy: ""
+    days: 30
+    rate_limit_sleep_ms: 200
+    timeout_s: 20
+  cache:
+    enabled: true
+    dir: ./runs/cache
+
+universe:
+  symbols: [BTCUSDT, ETHUSDT, BNBUSDT, SOLUSDT, XRPUSDT, DOGEUSDT]
+
+timeframes: ["1m","5m","15m","1h"]
+
+backtest:
+  base_tf: "15m"
+  fwd_period: 4
+  top_n: 3
+  bottom_n: 3
+  fee_rate: 0.0005
+  slippage: 0.0002
+  capital: 1000000
+  index_mode: union
+
+mining:
+  enabled: true
+  ic_window: 256
+  ic_min_abs: 0.02
+  icir_min_abs: 0.30
+  max_valid: 10
+  min_cs: 6
+
+research:
+  winsor_p: 0.01
+  use_orthogonal: true
+
+optimizer:
+  lam_risk: 3.0
+  lam_l1: 0.08
+  lam_tc: 0.15
+  w_max: 0.60
+  l1_cap: 1.0
+
+strategy_pool:
+  enabled: true
+  max_active: 6
+  score_window: 192
+  replace_each_n_steps: 96
+
+execution:
+  n_slices: 4
+  impact_c: 0.10
+  impact_p: 0.50
+
+report:
+  out_dir: ./runs
+  topk: 10

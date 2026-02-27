@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "factor-lab-pro"
+version = "0.1.0"
+description = "Factor Lab Pro - factor mining/backtest/report mini quant platform"
+authors = ["you <you@example.com>"]
+readme = "README.md"
+packages = [{ include = "factor_lab" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+numpy = ">=2.0"
+pandas = ">=2.2"
+pyyaml = ">=6.0"
+python-dotenv = ">=1.0"
+requests = ">=2.32"
+tqdm = ">=4.66"
+rich = ">=13.7"
+typer = ">=0.12"
+cvxpy = ">=1.5"
+pydantic = ">=2.7"
+pyarrow = ">=16.0"
+jinja2 = ">=3.1"
+
+[tool.poetry.scripts]
+factor-lab = "factor_lab.cli:app"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
