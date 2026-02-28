@@ -14,7 +14,7 @@ class ExecutionSimulator:
         syms = w_prev.index.union(w_new.index).union(entry_price.index)
         wp = w_prev.reindex(syms).fillna(0.0).astype(float)
         wn = w_new.reindex(syms).fillna(0.0).astype(float)
-        px = entry_price.reindex(syms).fillna(method="ffill").fillna(method="bfill").fillna(0.0).astype(float)
+        px = entry_price.reindex(syms).ffill().bfill().fillna(0.0).astype(float)
         advv = adv.reindex(syms).fillna(1e6).astype(float).replace(0,np.nan).fillna(1e6)
         volv = vol.reindex(syms).fillna(0.01).astype(float).clip(lower=1e-6)
 

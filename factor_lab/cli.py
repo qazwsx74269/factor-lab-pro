@@ -1,5 +1,7 @@
 from __future__ import annotations
 import os, json
+from collections import deque
+import numpy as np
 import typer
 import pandas as pd
 
@@ -82,6 +84,13 @@ def run(config: str = typer.Option(..., "-c", "--config")):
     syms = panel.index.get_level_values(1).unique()
 
     ledger=[]
+    # rolling premia buffer: use last ic_window cross-section premia for stable mu
+    prem_window = cfg.mining.ic_window  # default 256 steps
+    prem_buf: deque = deque(maxlen=prem_window)
+    # rebalance period: only update factor weights & positions every fwd_period steps
+    rebalance_period = cfg.backtest.fwd_period
+    w_target_cached = pd.Series(0.0, index=syms)
+
     # to compute premia: for each time, do cross-sectional ridge on valid_factors
     for step_i, t in enumerate(times):
         g = panel.xs(t, level=0).reindex(syms)
@@ -96,13 +105,52 @@ def run(config: str = typer.Option(..., "-c", "--config")):
 
         r = g["label_fwd"].astype(float).replace([float("inf"), float("-inf")], 0.0).fillna(0.0)
         prem = ridge_premia(Z, r, ridge=1e-3).reindex(valid_factors).fillna(0.0)
+        prem_buf.append(prem)
 
-        # rolling cov on premia history (simple: store last ic_window)
-        # store in ledger temporary
-        # We'll approximate Sigma by diagonal+shrink (lightweight)
-        Sigma = pd.DataFrame(shrink_cov(np.cov(Z.values.T) if Z.shape[0] > 2 else (Z.values.T@Z.values)/max(1,Z.shape[0]), alpha=0.10),
-                             index=valid_factors, columns=valid_factors)
-        mu = prem.copy()
+        # Only rebalance every fwd_period steps — no overlapping positions
+        if step_i % rebalance_period != 0:
+            ledger.append({
+                "status": "hold",
+                "equity": float(bt.equity),
+                "step": step_i,
+                "n_valid_factors": len(valid_factors),
+                "top_factor": w_prev.index[0] if len(w_prev) else None,
+                "top_factor_w": float(w_prev.iloc[0]) if len(w_prev) else 0.0,
+                "opt_diag": {"status": "hold"},
+            })
+            continue
+
+        # Use rolling-average premia as mu — much more stable than single-period estimate
+        if len(prem_buf) >= 4:
+            prem_mat = pd.concat(list(prem_buf), axis=1)
+            mu = prem_mat.mean(axis=1).reindex(valid_factors).fillna(0.0)
+        else:
+            mu = prem.copy()
+
+        # rolling cov on Z for Sigma — guard against degenerate shapes
+        try:
+            cov_mat = np.cov(Z.values.T) if Z.shape[0] > Z.shape[1] else (Z.values.T @ Z.values) / max(1, Z.shape[0])
+            if np.ndim(cov_mat) < 2:
+                cov_mat = np.atleast_2d(cov_mat)
+            Sigma = pd.DataFrame(shrink_cov(cov_mat, alpha=0.10),
+                                 index=valid_factors, columns=valid_factors)
+        except Exception:
+            Sigma = pd.DataFrame(np.eye(len(valid_factors)) * 0.01,
+                                 index=valid_factors, columns=valid_factors)
+
+        # Warmup: don't trade until we have enough premia history for stable mu
+        warmup_steps = min(64, prem_window // 4)
+        if step_i < warmup_steps:
+            ledger.append({
+                "status": "warmup",
+                "equity": float(bt.equity),
+                "step": step_i,
+                "n_valid_factors": len(valid_factors),
+                "top_factor": None,
+                "top_factor_w": 0.0,
+                "opt_diag": {"status": "warmup"},
+            })
+            continue
 
         w_fac, diag = opt.solve(mu, Sigma, w_prev, cfg.optimizer)
         w_prev = w_fac.reindex(valid_factors).fillna(0.0)
@@ -117,6 +165,7 @@ def run(config: str = typer.Option(..., "-c", "--config")):
         for st in pool.active():
             sig = st.strat.on_bar(t, g)
             w_target = w_target.add(sig.weights.reindex(syms).fillna(0.0) * st.weight, fill_value=0.0)
+        w_target_cached = w_target  # cache for non-rebalance steps
 
         meta = bt.step(t, w_target)
         meta["step"] = step_i

@@ -32,7 +32,12 @@ class BacktestEngine:
         exit_open  = self.panel.xs(t_exit, level=0).reindex(syms)["open"].astype(float)
 
         g_now = self.panel.xs(t, level=0).reindex(syms)
-        adv = g_now["volume"].astype(float).abs() if "volume" in g_now.columns else pd.Series(1e6, index=syms)
+        # Convert volume to USD-denominated ADV (base_volume × price) for impact model consistency
+        if "volume" in g_now.columns:
+            price_now = g_now["close"].astype(float).fillna(g_now["open"].astype(float)).replace(0, np.nan).fillna(1.0)
+            adv = (g_now["volume"].astype(float).abs() * price_now).fillna(1e6).replace(0, 1e6)
+        else:
+            adv = pd.Series(1e6, index=syms)
         vol = pd.Series(0.01, index=syms)
         if idx > 0:
             t_prev = self.times[idx-1]

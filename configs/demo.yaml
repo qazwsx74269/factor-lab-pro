@@ -18,30 +18,30 @@ timeframes: ["1m","5m","15m","1h"]
 backtest:
   base_tf: "15m"
   fwd_period: 4
-  top_n: 3
-  bottom_n: 3
+  top_n: 2
+  bottom_n: 2
   fee_rate: 0.0005
   slippage: 0.0002
   capital: 1000000
-  index_mode: union
+  index_mode: intersection
 
 mining:
   enabled: true
   ic_window: 256
-  ic_min_abs: 0.02
-  icir_min_abs: 0.30
-  max_valid: 10
-  min_cs: 6
+  ic_min_abs: 0.005
+  icir_min_abs: 0.10
+  max_valid: 8
+  min_cs: 4
 
 research:
   winsor_p: 0.01
   use_orthogonal: true
 
 optimizer:
-  lam_risk: 3.0
-  lam_l1: 0.08
-  lam_tc: 0.15
-  w_max: 0.60
+  lam_risk: 2.0
+  lam_l1: 0.05
+  lam_tc: 0.20
+  w_max: 0.70
   l1_cap: 1.0
 
 strategy_pool:

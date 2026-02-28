@@ -50,8 +50,8 @@ backtest:
 mining:
   enabled: true
   ic_window: 256
-  ic_min_abs: 0.02
-  icir_min_abs: 0.25    # 稍微放松一点
+  ic_min_abs: 0.005     # softer: 30d window has noisy IC
+  icir_min_abs: 0.10    # softer: allow factors with moderate ICIR
   max_valid: 8
   min_cs: 6
 
@@ -60,10 +60,10 @@ research:
   use_orthogonal: true
 
 optimizer:
-  lam_risk: 3.0
-  lam_l1: 0.08
-  lam_tc: 0.15
-  w_max: 0.60
+  lam_risk: 2.0
+  lam_l1: 0.05
+  lam_tc: 0.20   # strong TC penalty → low turnover
+  w_max: 0.70
   l1_cap: 1.0
 
 strategy_pool:
