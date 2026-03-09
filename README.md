@@ -70,8 +70,14 @@ HTTP_PROXY=http://127.0.0.1:7890
 
 开启 Pages：
 1) Settings -> Pages
-2) Deploy from branch：`gh-pages / root`
+2) Build and deployment -> Source：选择 **GitHub Actions**
 3) 访问：`https://<you>.github.io/<repo>/`
+
+默认自动化：
+- push 到 `main`：立即触发一次构建/发布
+- `schedule`：每 6 小时自动跑一次并刷新 GitHub Pages
+- `workflow_dispatch`：可手动补跑
+- `Smoke Test` workflow：先用 `configs/smoke.yaml` 跑小样本自检，降低主流程坏掉却没人发现的概率
 
 ---
 

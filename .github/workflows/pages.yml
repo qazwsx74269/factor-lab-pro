@@ -3,49 +3,73 @@ name: Publish Reports to GitHub Pages
 on:
   push:
     branches: [ "main" ]
+  schedule:
+    - cron: "17 */6 * * *"
   workflow_dispatch: {}
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Install Poetry
-        run: pip install poetry==1.8.3
+          cache: "pip"
 
       - name: Install deps
         run: |
-          poetry config virtualenvs.create false
-          poetry install --no-interaction --no-ansi
+          python -m pip install --upgrade pip
+          python -m pip install .
 
-      - name: Run backtest (optional)
+      - name: Run backtest
+        id: run_backtest
+        continue-on-error: true
         env:
           BINANCE_API_KEY: ${{ secrets.BINANCE_API_KEY }}
           BINANCE_API_SECRET: ${{ secrets.BINANCE_API_SECRET }}
           HTTP_PROXY: ${{ secrets.HTTP_PROXY }}
           HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
         run: |
-          factor-lab run -c configs/demo.yaml || true
+          mkdir -p runs
+          python -m factor_lab run -c configs/demo.yaml > runs/action-run.log 2>&1
 
-      - name: Prepare pages
+      - name: Prepare pages content
         run: |
           mkdir -p public
           if [ -f runs/index.html ]; then
-            cp -r runs/* public/
+            cp -R runs/. public/
           else
-            echo "<h1>No runs/index.html found</h1>" > public/index.html
+            cat > public/index.html <<'HTML'
+          <!doctype html>
+          <html><head><meta charset="utf-8"><title>Factor Lab Pro</title></head>
+          <body>
+            <h1>Factor Lab Pro</h1>
+            <p>The scheduled run did not produce <code>runs/index.html</code>.</p>
+            <p>See <a href="action-run.log">action-run.log</a> for details.</p>
+          </body></html>
+          HTML
+            [ -f runs/action-run.log ] && cp runs/action-run.log public/action-run.log
           fi
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: public
+          path: public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
