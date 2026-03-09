@@ -8,9 +8,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: github-pages
@@ -19,9 +17,6 @@ concurrency:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -36,7 +31,6 @@ jobs:
           python -m pip install .
 
       - name: Run backtest
-        id: run_backtest
         continue-on-error: true
         env:
           BINANCE_API_KEY: ${{ secrets.BINANCE_API_KEY }}
@@ -45,7 +39,7 @@ jobs:
           HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
         run: |
           mkdir -p runs
-          python -m factor_lab run -c configs/demo.yaml > runs/action-run.log 2>&1
+          python -m factor_lab run -c configs/demo.yaml > runs/action-run.log 2>&1 || true
 
       - name: Prepare pages content
         run: |
@@ -54,22 +48,20 @@ jobs:
             cp -R runs/. public/
           else
             cat > public/index.html <<'HTML'
-          <!doctype html>
-          <html><head><meta charset="utf-8"><title>Factor Lab Pro</title></head>
-          <body>
-            <h1>Factor Lab Pro</h1>
-            <p>The scheduled run did not produce <code>runs/index.html</code>.</p>
-            <p>See <a href="action-run.log">action-run.log</a> for details.</p>
-          </body></html>
-          HTML
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Factor Lab Pro</title></head>
+<body>
+  <h1>Factor Lab Pro</h1>
+  <p>The scheduled run did not produce <code>runs/index.html</code>.</p>
+  <p>See <a href="action-run.log">action-run.log</a> for details.</p>
+</body></html>
+HTML
             [ -f runs/action-run.log ] && cp runs/action-run.log public/action-run.log
           fi
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: public
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: public
+          force_orphan: true

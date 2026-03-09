@@ -10,12 +10,13 @@
 流程：
 1. 安装项目依赖
 2. 运行 `python -m factor_lab run -c configs/demo.yaml`
-3. 若成功，发布 `runs/` 到 GitHub Pages
+3. 若成功，发布 `runs/` 到 `gh-pages` 分支
 4. 若失败，仍然发布一个诊断页，并把 `runs/action-run.log` 暴露出来，避免页面直接空白
 
 ## Pages 设置
 在仓库 Settings -> Pages：
-- Source 选择 **GitHub Actions**
+- Source 选择 **Deploy from a branch**
+- Branch 选择 **gh-pages** / root
 
 ## Secrets（可选）
 如果 Actions 里也要拉取行情：
