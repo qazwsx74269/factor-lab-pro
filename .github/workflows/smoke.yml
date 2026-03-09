@@ -25,15 +25,14 @@ jobs:
       - name: Doctor
         run: python -m factor_lab doctor
 
-      - name: Run smoke config when proxy is available
-        if: ${{ secrets.HTTP_PROXY != '' || secrets.HTTPS_PROXY != '' }}
+      - name: Run conditional smoke config
         env:
           HTTP_PROXY: ${{ secrets.HTTP_PROXY }}
           HTTPS_PROXY: ${{ secrets.HTTPS_PROXY }}
-        run: python -m factor_lab run -c configs/smoke.yaml
-
-      - name: Skip smoke backtest without proxy
-        if: ${{ secrets.HTTP_PROXY == '' && secrets.HTTPS_PROXY == '' }}
         run: |
-          echo "Binance is not reachable from the default GitHub runner in this environment."
-          echo "Doctor passed; backtest smoke is skipped until HTTP_PROXY/HTTPS_PROXY secrets are configured."
+          if [ -n "$HTTP_PROXY" ] || [ -n "$HTTPS_PROXY" ]; then
+            python -m factor_lab run -c configs/smoke.yaml
+          else
+            echo "Binance is not reachable from the default GitHub runner in this environment."
+            echo "Doctor passed; backtest smoke is skipped until HTTP_PROXY/HTTPS_PROXY secrets are configured."
+          fi
