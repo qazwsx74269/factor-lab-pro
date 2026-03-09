@@ -1,0 +1,48 @@
+2026-03-09 21:08:22,217 | INFO | run | loading data...
+[31m╭─[0m[31m────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────[0m[31m─╮[0m
+[31m│[0m [2m/home/runner/work/factor-lab-pro/factor-lab-pro/factor_lab/[0m[1mcli.py[0m:44 in run  [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m 41 [0m[2m│   [0mos.makedirs(out_dir, exist_ok=[94mTrue[0m)                                [31m│[0m
+[31m│[0m   [2m 42 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m 43 [0m[2m│   [0mlogger.info([33m"[0m[33mloading data...[0m[33m"[0m)                                     [31m│[0m
+[31m│[0m [31m❱ [0m 44 [2m│   [0mall_sym = [1;4mload_all_sym_data(cfg)[0m                                   [31m│[0m
+[31m│[0m   [2m 45 [0m[2m│   [0m                                                                   [31m│[0m
+[31m│[0m   [2m 46 [0m[2m│   [0m[2m# build panel[0m                                                      [31m│[0m
+[31m│[0m   [2m 47 [0m[2m│   [0mpanel, reg = build_panel(all_sym, base_tf=cfg.backtest.base_tf, fw [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/factor-lab-pro/factor-lab-pro/factor_lab/data/[0m[1mloader.py[0m:31 [31m│[0m
+[31m│[0m in load_all_sym_data                                                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m28 [0m[2m│   │   │   [0m[94mif[0m cfg.data.cache.enabled:                                  [31m│[0m
+[31m│[0m   [2m29 [0m[2m│   │   │   │   [0mdf = read_cache(cfg.data.cache.dir, k)                  [31m│[0m
+[31m│[0m   [2m30 [0m[2m│   │   │   [0m[94mif[0m df [95mis[0m [94mNone[0m:                                              [31m│[0m
+[31m│[0m [31m❱ [0m31 [2m│   │   │   │   [0mdf = [1;4mfetch_klines(sym, INTERVAL_MAP[tf], start_ms, end_[0m [31m│[0m
+[31m│[0m   [2m32 [0m[2m│   │   │   │   │   │   │   │     [0m[1;4mbase_url=b.base_url, proxy=(b.proxy [0m[1;4;95mo[0m [31m│[0m
+[31m│[0m   [2m33 [0m[2m│   │   │   │   │   │   │   │     [0m[1;4mtimeout_s=b.timeout_s, rate_limit_sle[0m [31m│[0m
+[31m│[0m   [2m34 [0m[2m│   │   │   │   [0m[94mif[0m cfg.data.cache.enabled [95mand[0m df [95mis[0m [95mnot[0m [94mNone[0m [95mand[0m [96mlen[0m(df [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/home/runner/work/factor-lab-pro/factor-lab-pro/factor_lab/data/[0m[1mbinance.py[0m:2 [31m│[0m
+[31m│[0m 3 in fetch_klines                                                            [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m20 [0m[2m│   [0m[94mwhile[0m cur < end_ms:                                                 [31m│[0m
+[31m│[0m   [2m21 [0m[2m│   │   [0mr = s.get(url, params=[96mdict[0m(symbol=symbol, interval=interval, st [31m│[0m
+[31m│[0m   [2m22 [0m[2m│   │   │   │     [0mtimeout=timeout_s)                                    [31m│[0m
+[31m│[0m [31m❱ [0m23 [2m│   │   [0m[1;4mr.raise_for_status()[0m                                            [31m│[0m
+[31m│[0m   [2m24 [0m[2m│   │   [0mdata = r.json()                                                 [31m│[0m
+[31m│[0m   [2m25 [0m[2m│   │   [0m[94mif[0m [95mnot[0m data:                                                    [31m│[0m
+[31m│[0m   [2m26 [0m[2m│   │   │   [0m[94mbreak[0m                                                       [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m [2m/opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages/request[0m [31m│[0m
+[31m│[0m [2ms/[0m[1mmodels.py[0m:1026 in raise_for_status                                         [31m│[0m
+[31m│[0m                                                                              [31m│[0m
+[31m│[0m   [2m1023 [0m[2m│   │   │   [0m)                                                         [31m│[0m
+[31m│[0m   [2m1024 [0m[2m│   │   [0m                                                              [31m│[0m
+[31m│[0m   [2m1025 [0m[2m│   │   [0m[94mif[0m http_error_msg:                                            [31m│[0m
+[31m│[0m [31m❱ [0m1026 [2m│   │   │   [0m[1;4;94mraise[0m[1;4m HTTPError(http_error_msg, response=[0m[1;4;96mself[0m[1;4m)[0m            [31m│[0m
+[31m│[0m   [2m1027 [0m[2m│   [0m                                                                  [31m│[0m
+[31m│[0m   [2m1028 [0m[2m│   [0m[94mdef[0m[90m [0m[92mclose[0m([96mself[0m):                                                  [31m│[0m
+[31m│[0m   [2m1029 [0m[2;90m│   │   [0m[33m"""Releases the connection back to the pool. Once this method[0m [31m│[0m
+[31m╰──────────────────────────────────────────────────────────────────────────────╯[0m
+[1;91mHTTPError: [0m[1;36m451[0m Client Error:  for url: 
+[4;94mhttps://api.binance.com/api/v3/klines?[0m[4;94msymbol[0m[4;94m=[0m[4;94mBTCUSDT[0m[4;94m&[0m[4;94minterval[0m[4;94m=[0m[4;94m1m[0m[4;94m&[0m[4;94mstartTime[0m[4;94m=[0m[4;94m17704[0m
+[4;94m98502217[0m[4;94m&[0m[4;94mendTime[0m[4;94m=[0m[4;94m1773090502217[0m[4;94m&[0m[4;94mlimit[0m[4;94m=[0m[4;94m1000[0m
