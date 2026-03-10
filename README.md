@@ -75,10 +75,19 @@ HTTP_PROXY=http://127.0.0.1:7890
 4) 访问：`https://<you>.github.io/<repo>/`
 
 默认自动化：
-- push 到 `main`：立即触发一次构建/发布
-- `schedule`：每 6 小时自动跑一次并刷新 GitHub Pages
-- `workflow_dispatch`：可手动补跑
+- **本机 launchd**：每 6 小时自动跑一次并发布到 `gh-pages`
+- GitHub Actions `workflow_dispatch`：保留为手动诊断/补跑入口
 - `Smoke Test` workflow：先做运行环境自检；如果配置了代理 secrets，再跑 `configs/smoke.yaml` 小样本回测
+
+本机无人值守发布：
+```bash
+bash scripts/install_launchagent.sh
+```
+
+手动立即跑一次：
+```bash
+bash scripts/run_and_publish.sh
+```
 
 ---
 

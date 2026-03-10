@@ -1,22 +1,27 @@
 # GitHub Pages（github.io）发布报告历史
 
-主 workflow: `.github/workflows/pages.yml`
+主发布方式：**本机定时运行 + 推送 `gh-pages`**
 
-触发方式：
-- push `main`
-- `schedule`（默认每 6 小时一次）
-- `workflow_dispatch`
+相关脚本：
+- `scripts/run_and_publish.sh`：本机执行回测并发布 Pages
+- `scripts/install_launchagent.sh`：安装 macOS `launchd` 定时任务（默认每天 00:17 / 06:17 / 12:17 / 18:17）
 
-流程：
-1. 安装项目依赖
-2. 运行 `python -m factor_lab run -c configs/demo.yaml`
-3. 若成功，发布 `runs/` 到 `gh-pages` 分支
-4. 若失败，仍然发布一个诊断页，并把 `runs/action-run.log` 暴露出来，避免页面直接空白
+GitHub Actions 中的 `.github/workflows/pages.yml` 仅保留 `workflow_dispatch`，作为手动诊断/补跑入口，不再依赖 GitHub runner 抓 Binance 数据。
 
 ## Pages 设置
 在仓库 Settings -> Pages：
 - Source 选择 **Deploy from a branch**
 - Branch 选择 **gh-pages** / root
+
+## 本机部署
+```bash
+bash scripts/install_launchagent.sh
+```
+
+## 手动跑并发布
+```bash
+bash scripts/run_and_publish.sh
+```
 
 ## Secrets（可选）
 如果 Actions 里也要拉取行情：
