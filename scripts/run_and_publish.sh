@@ -25,7 +25,21 @@ cd "$REPO_DIR"
 run_local_python() {
   if [ ! -x "$PYTHON_BIN" ]; then
     echo "[$(date '+%F %T')] creating virtualenv"
-    python3 -m venv "$VENV_DIR"
+    if command -v python3.11 >/dev/null 2>&1; then
+      python3.11 -m venv "$VENV_DIR"
+    else
+      python3 -m venv "$VENV_DIR"
+    fi
+  fi
+
+  if ! "$PYTHON_BIN" -c 'import sys; assert (3,10) <= sys.version_info[:2] < (3,13)' >/dev/null 2>&1; then
+    rm -rf "$VENV_DIR"
+    if command -v python3.11 >/dev/null 2>&1; then
+      echo "[$(date '+%F %T')] recreating virtualenv with python3.11"
+      python3.11 -m venv "$VENV_DIR"
+    else
+      return 1
+    fi
   fi
 
   if ! "$PYTHON_BIN" -c 'import sys; assert (3,10) <= sys.version_info[:2] < (3,13)' >/dev/null 2>&1; then

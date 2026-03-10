@@ -33,7 +33,7 @@ cat > "$PLIST_PATH" <<PLIST
       <key>DOCKER_HOST</key>
       <string>unix:///var/run/docker.sock</string>
       <key>FACTOR_LAB_RUN_MODE</key>
-      <string>docker</string>
+      <string>auto</string>
     </dict>
 
     <key>RunAtLoad</key>
