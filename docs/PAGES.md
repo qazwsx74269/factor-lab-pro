@@ -6,6 +6,10 @@
 - `scripts/run_and_publish.sh`：本机执行回测并发布 Pages
 - `scripts/install_launchagent.sh`：安装 macOS `launchd` 定时任务（默认每天 00:17 / 06:17 / 12:17 / 18:17）
 
+运行模式：
+- 默认 `FACTOR_LAB_RUN_MODE=auto`
+- 若本机 Python 版本不兼容，会自动 fallback 到 Docker
+
 GitHub Actions 中的 `.github/workflows/pages.yml` 仅保留 `workflow_dispatch`，作为手动诊断/补跑入口，不再依赖 GitHub runner 抓 Binance 数据。
 
 ## Pages 设置

@@ -12,6 +12,7 @@ CONFIG_PATH="${FACTOR_LAB_CONFIG:-$REPO_DIR/configs/demo.yaml}"
 PUBLISH_BRANCH="${FACTOR_LAB_PUBLISH_BRANCH:-gh-pages}"
 PUBLISH_REMOTE="${FACTOR_LAB_PUBLISH_REMOTE:-origin}"
 PUBLISH_TMP_ROOT="${TMPDIR:-/tmp}"
+RUN_MODE="${FACTOR_LAB_RUN_MODE:-auto}"
 
 mkdir -p "$RUNS_DIR" "$LOG_DIR"
 exec > >(tee -a "$RUN_LOG") 2>&1
@@ -21,19 +22,50 @@ echo "[$(date '+%F %T')] config=$CONFIG_PATH"
 
 cd "$REPO_DIR"
 
-if [ ! -x "$PYTHON_BIN" ]; then
-  echo "[$(date '+%F %T')] creating virtualenv"
-  python3 -m venv "$VENV_DIR"
-fi
+run_local_python() {
+  if [ ! -x "$PYTHON_BIN" ]; then
+    echo "[$(date '+%F %T')] creating virtualenv"
+    python3 -m venv "$VENV_DIR"
+  fi
 
-if ! "$PYTHON_BIN" -c 'import numpy, pandas, factor_lab.cli' >/dev/null 2>&1; then
-  echo "[$(date '+%F %T')] installing/updating dependencies"
-  "$PIP_BIN" install --upgrade pip
-  "$PIP_BIN" install .
-fi
+  if ! "$PYTHON_BIN" -c 'import sys; assert (3,10) <= sys.version_info[:2] < (3,13)' >/dev/null 2>&1; then
+    return 1
+  fi
 
-echo "[$(date '+%F %T')] running factor_lab"
-"$PYTHON_BIN" -m factor_lab run -c "$CONFIG_PATH"
+  if ! "$PYTHON_BIN" -c 'import numpy, pandas, factor_lab.cli' >/dev/null 2>&1; then
+    echo "[$(date '+%F %T')] installing/updating dependencies"
+    "$PIP_BIN" install --upgrade pip
+    "$PIP_BIN" install .
+  fi
+
+  echo "[$(date '+%F %T')] running factor_lab via local python"
+  "$PYTHON_BIN" -m factor_lab run -c "$CONFIG_PATH"
+}
+
+run_docker() {
+  echo "[$(date '+%F %T')] running factor_lab via docker compose"
+  docker compose build factor-lab-pro
+  docker compose run --rm factor-lab-pro
+}
+
+case "$RUN_MODE" in
+  auto)
+    if ! run_local_python; then
+      echo "[$(date '+%F %T')] local python unavailable/incompatible; falling back to docker"
+      run_docker
+    fi
+    ;;
+  local)
+    run_local_python
+    ;;
+  docker)
+    run_docker
+    ;;
+  *)
+    echo "Unknown FACTOR_LAB_RUN_MODE: $RUN_MODE" >&2
+    exit 2
+    ;;
+esac
 
 if [ ! -f "$RUNS_DIR/index.html" ]; then
   echo "runs/index.html was not generated" >&2

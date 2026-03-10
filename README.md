@@ -89,6 +89,10 @@ bash scripts/install_launchagent.sh
 bash scripts/run_and_publish.sh
 ```
 
+说明：
+- 脚本默认 `FACTOR_LAB_RUN_MODE=auto`
+- 若本机 Python 版本不兼容（例如 3.13），会自动 fallback 到 Docker
+
 ---
 
 ## 目录结构（工程版）
