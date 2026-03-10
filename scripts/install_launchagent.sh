@@ -41,10 +41,7 @@ cat > "$PLIST_PATH" <<PLIST
 
     <key>StartCalendarInterval</key>
     <array>
-      <dict><key>Hour</key><integer>0</integer><key>Minute</key><integer>17</integer></dict>
-      <dict><key>Hour</key><integer>6</integer><key>Minute</key><integer>17</integer></dict>
-      <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>17</integer></dict>
-      <dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>17</integer></dict>
+      <dict><key>Minute</key><integer>0</integer></dict>
     </array>
 
     <key>StandardOutPath</key>
