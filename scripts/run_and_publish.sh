@@ -100,7 +100,10 @@ else
   cd "$REPO_DIR"
 fi
 
-rm -rf "$PUBLISH_DIR"/* "$PUBLISH_DIR"/.[!.]* "$PUBLISH_DIR"/..?* 2>/dev/null || true
+find "$PUBLISH_DIR" -mindepth 1 -maxdepth 1 \
+  ! -name .git \
+  ! -name .github \
+  -exec rm -rf {} +
 cp -R "$RUNS_DIR"/. "$PUBLISH_DIR"/
 touch "$PUBLISH_DIR/.nojekyll"
 
