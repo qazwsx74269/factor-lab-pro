@@ -28,6 +28,12 @@ cat > "$PLIST_PATH" <<PLIST
     <dict>
       <key>PATH</key>
       <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+      <key>HOME</key>
+      <string>$HOME</string>
+      <key>DOCKER_HOST</key>
+      <string>unix:///var/run/docker.sock</string>
+      <key>FACTOR_LAB_RUN_MODE</key>
+      <string>docker</string>
     </dict>
 
     <key>RunAtLoad</key>
