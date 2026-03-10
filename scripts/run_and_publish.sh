@@ -26,7 +26,7 @@ if [ ! -x "$PYTHON_BIN" ]; then
   python3 -m venv "$VENV_DIR"
 fi
 
-if ! "$PYTHON_BIN" -c 'import factor_lab' >/dev/null 2>&1; then
+if ! "$PYTHON_BIN" -c 'import numpy, pandas, factor_lab.cli' >/dev/null 2>&1; then
   echo "[$(date '+%F %T')] installing/updating dependencies"
   "$PIP_BIN" install --upgrade pip
   "$PIP_BIN" install .
