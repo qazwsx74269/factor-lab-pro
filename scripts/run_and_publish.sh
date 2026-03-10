@@ -22,6 +22,103 @@ echo "[$(date '+%F %T')] config=$CONFIG_PATH"
 
 cd "$REPO_DIR"
 
+analyze_previous_run() {
+  echo "[$(date '+%F %T')] analyzing previous run for optimization hints"
+  python3 - <<'PY'
+import json
+from pathlib import Path
+from datetime import datetime
+
+runs_dir = Path("runs")
+out = Path("logs/pre_run_analysis.md")
+out.parent.mkdir(parents=True, exist_ok=True)
+
+run_dirs = [p for p in runs_dir.iterdir() if p.is_dir() and p.name not in {"cache", "latest"}]
+run_dirs.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+
+lines = [f"# Pre-run analysis ({datetime.now().isoformat(timespec='seconds')})", ""]
+
+if not run_dirs:
+    lines.append("No previous run found. Start with default config and collect baseline.")
+    out.write_text("\n".join(lines), encoding="utf-8")
+    print(out.as_posix())
+    raise SystemExit(0)
+
+last = run_dirs[0]
+ledger = last / "ledger.jsonl"
+lines.append(f"Last run: `{last.name}`")
+
+if not ledger.exists():
+    lines.append("No ledger.jsonl found. Keep current config and verify run integrity first.")
+    out.write_text("\n".join(lines), encoding="utf-8")
+    print(out.as_posix())
+    raise SystemExit(0)
+
+rows = []
+with ledger.open("r", encoding="utf-8") as f:
+    for line in f:
+        try:
+            rows.append(json.loads(line))
+        except Exception:
+            pass
+
+if not rows:
+    lines.append("Ledger is empty/invalid. Keep config, fix data pipeline stability first.")
+    out.write_text("\n".join(lines), encoding="utf-8")
+    print(out.as_posix())
+    raise SystemExit(0)
+
+# core stats
+ok = [r for r in rows if r.get("status") == "ok"]
+hold = [r for r in rows if r.get("status") == "hold"]
+rets = [float(r.get("ret", 0.0)) for r in ok if isinstance(r.get("ret", 0), (int, float))]
+equities = [float(r.get("equity", 1.0)) for r in rows if isinstance(r.get("equity", 1), (int, float))]
+
+final_eq = equities[-1] if equities else 1.0
+total_ret = final_eq - 1.0
+peak = 1.0
+max_dd = 0.0
+for e in equities:
+    peak = max(peak, e)
+    dd = e / peak - 1.0
+    max_dd = min(max_dd, dd)
+
+win_rate = (sum(1 for x in rets if x > 0) / len(rets)) if rets else 0.0
+
+lines += [
+    "",
+    "## Snapshot",
+    f"- final equity: **{final_eq:.4f}**",
+    f"- total return: **{total_ret*100:.2f}%**",
+    f"- max drawdown: **{max_dd*100:.2f}%**",
+    f"- win rate (ok steps): **{win_rate*100:.1f}%**",
+    f"- ok steps: **{len(ok)}** / all steps: **{len(rows)}**",
+    f"- hold ratio: **{(len(hold)/len(rows)*100 if rows else 0):.1f}%**",
+]
+
+lines += ["", "## Optimization hints for next run"]
+
+if total_ret <= 0:
+    lines.append("- Return <= 0: lower turnover pressure first (e.g., reduce rebalance frequency or raise lam_tc).")
+if max_dd < -0.25:
+    lines.append("- Drawdown too deep: reduce concentration/risk (e.g., lower w_max or increase lam_risk).")
+if rets and win_rate < 0.45:
+    lines.append("- Low win rate: check if strategy relies on rare outliers; tighten factor quality filter (ic_min_abs/icir_min_abs).")
+if rows and len(hold)/len(rows) > 0.9:
+    lines.append("- Hold ratio very high: refresh signal cadence may be too slow; evaluate rebalance_period/fwd_period trade-off.")
+if len(ok) < 30:
+    lines.append("- Too few effective trading steps: extend sample window (more days) before drawing conclusions.")
+
+if lines[-1] == "## Optimization hints for next run":
+    lines.append("- No obvious red flags. Keep current config and continue collecting more out-of-sample runs.")
+
+out.write_text("\n".join(lines), encoding="utf-8")
+print(out.as_posix())
+PY
+}
+
+analyze_previous_run
+
 run_local_python() {
   if [ ! -x "$PYTHON_BIN" ]; then
     echo "[$(date '+%F %T')] creating virtualenv"
