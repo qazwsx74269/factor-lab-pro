@@ -166,7 +166,19 @@ def run(config: str = typer.Option(..., "-c", "--config")):
                 st.strat.update_factor_weights(w_prev)
 
         # If factor weights are all zero (no valid signal yet), skip rebalance this step
+        # But still allow pool to grow/replace even when there's no signal
         if w_prev.abs().sum() < 1e-6:
+            if cfg.strategy_pool.enabled:
+                def factory():
+                    k = len(pool.states)
+                    return FactorCSStrategy(
+                        name=f"cs_factor_{k}",
+                        factor_weights=pd.Series({f: 1.0/len(valid_factors) for f in valid_factors}),
+                        top_n=cfg.backtest.top_n,
+                        bottom_n=cfg.backtest.bottom_n,
+                        leverage=1.0
+                    )
+                pool.maybe_replace(factory)
             ledger.append({
                 "status": "no_signal",
                 "equity": float(bt.equity),
