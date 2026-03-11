@@ -13,6 +13,10 @@ from factor_lab.data.panel import build_panel
 from factor_lab.factors.miner import mine_factors
 from factor_lab.optimizer.factor_weight import FactorWeightOptimizer, ridge_premia, orthogonalize, shrink_cov
 from factor_lab.strategy.factor_cs import FactorCSStrategy
+from factor_lab.strategy.momentum import MomentumStrategy
+from factor_lab.strategy.mean_reversion import MeanReversionStrategy
+from factor_lab.strategy.vol_scaled import VolScaledCSStrategy
+from factor_lab.strategy.top_factor import TopFactorStrategy
 from factor_lab.strategy.pool import StrategyPool
 from factor_lab.backtest.engine import BacktestEngine
 from factor_lab.backtest.execution import ExecutionSimulator
@@ -65,15 +69,35 @@ def run(config: str = typer.Option(..., "-c", "--config")):
     opt = FactorWeightOptimizer()
     w_prev = pd.Series(0.0, index=valid_factors)
 
-    # strategy pool (active 3-10)
+    # strategy pool
     pool = StrategyPool(max_active=cfg.strategy_pool.max_active,
                         score_window=cfg.strategy_pool.score_window,
                         replace_each_n_steps=cfg.strategy_pool.replace_each_n_steps)
 
-    # initial strategy: factor cs
+    # seed pool with diverse strategies upfront
     init_fw = pd.Series({f: 1.0/len(valid_factors) for f in valid_factors})
-    pool.add(FactorCSStrategy(name="cs_factor_0", factor_weights=init_fw,
-                              top_n=cfg.backtest.top_n, bottom_n=cfg.backtest.bottom_n, leverage=1.0), weight=1.0)
+    top_n, bot_n = cfg.backtest.top_n, cfg.backtest.bottom_n
+
+    seed_strategies = [
+        # 1. Multi-factor CS (equal weight, baseline)
+        FactorCSStrategy(name="cs_equal", factor_weights=init_fw,
+                         top_n=top_n, bottom_n=bot_n, leverage=1.0),
+        # 2. Momentum (buy recent winners, short recent losers)
+        MomentumStrategy(name="momentum", lookback_col="ret_1h",
+                         top_n=top_n, bottom_n=bot_n, leverage=1.0),
+        # 3. Mean reversion (contrarian)
+        MeanReversionStrategy(name="mean_rev", signal_col="ret_1h",
+                              top_n=top_n, bottom_n=bot_n, leverage=1.0),
+        # 4. Vol-scaled factor CS (inv-vol sizing)
+        VolScaledCSStrategy(name="vol_scaled", factor_weights=init_fw,
+                            top_n=top_n, bottom_n=bot_n, leverage=1.0),
+        # 5. Top-factor only (concentrated single-factor bet)
+        TopFactorStrategy(name="top_factor", factor_weights=init_fw,
+                          top_n=top_n, bottom_n=bot_n, leverage=1.0),
+    ]
+    # add up to max_active seeds
+    for strat in seed_strategies[:cfg.strategy_pool.max_active]:
+        pool.add(strat, weight=0.0)
     pool.allocate_equal()
 
     # backtest engine
@@ -169,15 +193,22 @@ def run(config: str = typer.Option(..., "-c", "--config")):
         # But still allow pool to grow/replace even when there's no signal
         if w_prev.abs().sum() < 1e-6:
             if cfg.strategy_pool.enabled:
+                _ns_types = ["momentum", "mean_rev", "cs", "vol_scaled", "top_factor"]
+                _fallback_fw = pd.Series({f: 1.0/len(valid_factors) for f in valid_factors})
                 def factory():
                     k = len(pool.states)
-                    return FactorCSStrategy(
-                        name=f"cs_factor_{k}",
-                        factor_weights=pd.Series({f: 1.0/len(valid_factors) for f in valid_factors}),
-                        top_n=cfg.backtest.top_n,
-                        bottom_n=cfg.backtest.bottom_n,
-                        leverage=1.0
-                    )
+                    stype = _ns_types[k % len(_ns_types)]
+                    tn, bn = cfg.backtest.top_n, cfg.backtest.bottom_n
+                    if stype == "momentum":
+                        return MomentumStrategy(name=f"momentum_{k}", top_n=tn, bottom_n=bn)
+                    elif stype == "mean_rev":
+                        return MeanReversionStrategy(name=f"mean_rev_{k}", top_n=tn, bottom_n=bn)
+                    elif stype == "vol_scaled":
+                        return VolScaledCSStrategy(name=f"vol_scaled_{k}", factor_weights=_fallback_fw, top_n=tn, bottom_n=bn)
+                    elif stype == "top_factor":
+                        return TopFactorStrategy(name=f"top_factor_{k}", factor_weights=_fallback_fw, top_n=tn, bottom_n=bn)
+                    else:
+                        return FactorCSStrategy(name=f"cs_{k}", factor_weights=_fallback_fw, top_n=tn, bottom_n=bn)
                 pool.maybe_replace(factory)
             ledger.append({
                 "status": "no_signal",
@@ -214,21 +245,31 @@ def run(config: str = typer.Option(..., "-c", "--config")):
                 for st in act:
                     pool.update_pnl(st.strat.name, r_step * st.weight)
 
-        # replacement
+        # replacement: rotate through strategy types to keep diversity
         if cfg.strategy_pool.enabled:
+            _strategy_types = ["cs", "momentum", "mean_rev", "vol_scaled", "top_factor"]
             def factory():
-                # create a slightly perturbed strategy name
                 k = len(pool.states)
-                return FactorCSStrategy(
-                    name=f"cs_factor_{k}",
-                    factor_weights=w_prev,
-                    top_n=cfg.backtest.top_n,
-                    bottom_n=cfg.backtest.bottom_n,
-                    leverage=1.0
-                )
+                stype = _strategy_types[k % len(_strategy_types)]
+                tn, bn = cfg.backtest.top_n, cfg.backtest.bottom_n
+                if stype == "momentum":
+                    return MomentumStrategy(name=f"momentum_{k}", lookback_col="ret_1h",
+                                            top_n=tn, bottom_n=bn, leverage=1.0)
+                elif stype == "mean_rev":
+                    return MeanReversionStrategy(name=f"mean_rev_{k}", signal_col="ret_1h",
+                                                 top_n=tn, bottom_n=bn, leverage=1.0)
+                elif stype == "vol_scaled":
+                    return VolScaledCSStrategy(name=f"vol_scaled_{k}", factor_weights=w_prev,
+                                               top_n=tn, bottom_n=bn, leverage=1.0)
+                elif stype == "top_factor":
+                    return TopFactorStrategy(name=f"top_factor_{k}", factor_weights=w_prev,
+                                             top_n=tn, bottom_n=bn, leverage=1.0)
+                else:
+                    return FactorCSStrategy(name=f"cs_{k}", factor_weights=w_prev,
+                                            top_n=tn, bottom_n=bn, leverage=1.0)
             rep = pool.maybe_replace(factory)
-            if rep.get("did_replace"):
-                logger.info("pool replace: %s", rep)
+            if rep.get("did_replace") or rep.get("added"):
+                logger.info("pool update: %s", rep)
 
     # write ledger
     with open(os.path.join(out_dir, "ledger.jsonl"), "w", encoding="utf-8") as f:
