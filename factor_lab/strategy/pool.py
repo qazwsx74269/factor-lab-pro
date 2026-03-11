@@ -64,10 +64,14 @@ class StrategyPool:
             return {"did_replace": False}
 
         act = self.active()
-        if len(act) <= 1:
-            return {"did_replace": False}
+        # If pool is not yet full, just add a new strategy without replacing anyone
+        if len(act) < self.max_active:
+            new = factory_fn()
+            self.add(new, weight=0.0)
+            self.allocate_equal()
+            return {"did_replace": False, "added": new.name}
 
-        # drop worst score
+        # Pool is full: drop worst-scoring strategy and add a new candidate
         scores = [(sharpe_like(st.pnl_hist[-self.score_window:]), i) for i, st in enumerate(self.states) if st.active]
         scores.sort(key=lambda x: x[0])
         worst_score, worst_idx = scores[0]

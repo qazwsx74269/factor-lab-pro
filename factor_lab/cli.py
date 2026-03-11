@@ -114,8 +114,8 @@ def run(config: str = typer.Option(..., "-c", "--config")):
                 "equity": float(bt.equity),
                 "step": step_i,
                 "n_valid_factors": len(valid_factors),
-                "top_factor": w_prev.index[0] if len(w_prev) else None,
-                "top_factor_w": float(w_prev.iloc[0]) if len(w_prev) else 0.0,
+                "top_factor": w_prev.abs().idxmax() if len(w_prev) else None,
+                "top_factor_w": float(w_prev.abs().max()) if len(w_prev) else 0.0,
                 "opt_diag": {"status": "hold"},
             })
             continue
@@ -153,12 +153,30 @@ def run(config: str = typer.Option(..., "-c", "--config")):
             continue
 
         w_fac, diag = opt.solve(mu, Sigma, w_prev, cfg.optimizer)
-        w_prev = w_fac.reindex(valid_factors).fillna(0.0)
+        w_fac = w_fac.reindex(valid_factors).fillna(0.0)
+
+        # Only update factor weights when signal is meaningful (not near-zero solver noise)
+        if diag.get("status") not in ("fail", "near_zero"):
+            w_prev = w_fac
+        # else: keep w_prev from previous rebalance (hold current factor direction)
 
         # update pool strategies that are FactorCSStrategy
         for st in pool.active():
             if hasattr(st.strat, "update_factor_weights"):
                 st.strat.update_factor_weights(w_prev)
+
+        # If factor weights are all zero (no valid signal yet), skip rebalance this step
+        if w_prev.abs().sum() < 1e-6:
+            ledger.append({
+                "status": "no_signal",
+                "equity": float(bt.equity),
+                "step": step_i,
+                "n_valid_factors": len(valid_factors),
+                "top_factor": None,
+                "top_factor_w": 0.0,
+                "opt_diag": diag,
+            })
+            continue
 
         # combine strategy signals
         w_target = pd.Series(0.0, index=syms)
@@ -170,8 +188,8 @@ def run(config: str = typer.Option(..., "-c", "--config")):
         meta = bt.step(t, w_target)
         meta["step"] = step_i
         meta["n_valid_factors"] = len(valid_factors)
-        meta["top_factor"] = w_prev.index[0] if len(w_prev) else None
-        meta["top_factor_w"] = float(w_prev.iloc[0]) if len(w_prev) else 0.0
+        meta["top_factor"] = w_prev.abs().idxmax() if len(w_prev) else None
+        meta["top_factor_w"] = float(w_prev.abs().max()) if len(w_prev) else 0.0
         meta["opt_diag"] = diag
         ledger.append(meta)
 
