@@ -34,7 +34,9 @@ def build_panel(all_sym_data: dict, base_tf="15m", fwd_period=4, index_mode="uni
             out["volume"] = align_to_base(dfb["volume"].astype(float), base_index)
         fac = reg.compute_for_symbol(sd, base_index)
         out = pd.concat([out, fac], axis=1)
-        out["label_fwd"] = out["close"].shift(-fwd_period) / (out["close"] + 1e-12) - 1.0
+        # label aligned to actual execution window: enter at open[t+1], exit at open[t+1+fwd_period]
+        # so return = close[t+1+fwd_period] / close[t+1] - 1  (open ≈ close for 24/7 crypto)
+        out["label_fwd"] = out["close"].shift(-(fwd_period + 1)) / (out["close"].shift(-1) + 1e-12) - 1.0
         out["symbol"] = sym
         frames.append(out.reset_index().rename(columns={"index":"time"}))
 

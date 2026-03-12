@@ -44,6 +44,15 @@ class FactorWeightOptimizer:
         if len(facs)==0:
             return pd.Series(dtype=float), {"status":"empty"}
         m = mu.values.astype(float)
+        # Normalize mu to unit scale so optimizer penalties are comparable to signal strength.
+        # ridge_premia returns betas in units of (return per z-score unit) ≈ 1e-4,
+        # while lam_l1/lam_tc are O(0.01–1.0). Without normalization, penalties always
+        # dominate and the optimizer returns near-zero weights (solver noise).
+        mu_scale = float(np.abs(m).max())
+        if mu_scale > 1e-8:
+            m = m / mu_scale  # now in [-1, 1] range
+        else:
+            return pd.Series(0.0, index=facs), {"status": "zero_mu"}
         S = Sigma.reindex(index=facs, columns=facs).fillna(0.0).values.astype(float)
         S = 0.5*(S+S.T)
         S[np.diag_indices_from(S)] += 1e-8
@@ -68,5 +77,11 @@ class FactorWeightOptimizer:
         if w.value is None:
             return pd.Series(0.0, index=facs), {"status":"fail"}
         out = pd.Series(np.asarray(w.value).astype(float), index=facs)
-        out = out / (out.abs().sum() + 1e-12)
+        abs_sum = float(out.abs().sum())
+        # Guard: if optimizer returned near-zero weights (weak signal overwhelmed by penalties),
+        # normalization would amplify solver numerical noise into random directions.
+        # Return zeros instead so the strategy skips this rebalance.
+        if abs_sum < 1e-3:
+            return pd.Series(0.0, index=facs), {"status": "near_zero", "abs_sum": abs_sum}
+        out = out / abs_sum
         return out.sort_values(key=lambda s: s.abs(), ascending=False), {"status":"ok", "obj": float(prob.value) if prob.value is not None else None}

@@ -13,6 +13,7 @@ def fetch_klines(symbol: str, interval: str, start_ms: int, end_ms: int,
     s = requests.Session()
     if proxy:
         s.proxies.update({"http": proxy, "https": proxy})
+        s.verify = False  # proxy may intercept TLS; skip cert check
     url = base_url.rstrip("/") + "/api/v3/klines"
 
     out = []

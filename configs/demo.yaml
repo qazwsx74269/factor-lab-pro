@@ -3,7 +3,7 @@ data:
   binance:
     base_url: https://api.binance.com
     proxy: ""
-    days: 30
+    days: 60
     rate_limit_sleep_ms: 200
     timeout_s: 20
   cache:
@@ -17,7 +17,7 @@ timeframes: ["1m","5m","15m","1h"]
 
 backtest:
   base_tf: "15m"
-  fwd_period: 4
+  fwd_period: 8        # was 4 → rebalance every 2h instead of 1h (halves turnover)
   top_n: 2
   bottom_n: 2
   fee_rate: 0.0005
@@ -27,10 +27,10 @@ backtest:
 
 mining:
   enabled: true
-  ic_window: 256
+  ic_window: 512       # was 256 → more stable IC estimation with 60 days of data
   ic_min_abs: 0.005
-  icir_min_abs: 0.10
-  max_valid: 8
+  icir_min_abs: 0.02   # was 0.10 → was too high, no factor passed; ret_1h ICIR≈0.022 now qualifies
+  max_valid: 6         # was 8 → concentrate on better factors
   min_cs: 4
 
 research:
@@ -38,17 +38,17 @@ research:
   use_orthogonal: true
 
 optimizer:
-  lam_risk: 2.0
-  lam_l1: 0.05
-  lam_tc: 0.20
-  w_max: 0.70
+  lam_risk: 3.0        # was 2.0 → more risk aversion
+  lam_l1: 0.05         # note: mu is normalized to [-1,1] before optimization; lam_l1+lam_tc must be <1.0
+  lam_tc: 0.30         # penalize turnover; with normalized mu, trades only when |signal| > 0.35 of max
+  w_max: 0.50          # was 0.70 → less concentration per factor
   l1_cap: 1.0
 
 strategy_pool:
   enabled: true
-  max_active: 6
+  max_active: 4        # was 6 → fewer, higher-quality strategies
   score_window: 192
-  replace_each_n_steps: 96
+  replace_each_n_steps: 192  # was 96 → replace strategies less aggressively
 
 execution:
   n_slices: 4
