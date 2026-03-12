@@ -30,7 +30,7 @@ mining:
   ic_window: 512       # was 256 → more stable IC estimation with 60 days of data
   ic_min_abs: 0.005
   icir_min_abs: 0.02   # was 0.10 → was too high, no factor passed; ret_1h ICIR≈0.022 now qualifies
-  max_valid: 6         # was 8 → concentrate on better factors
+  max_valid: 10        # expanded candidate pool after adding new frontier-inspired factors
   min_cs: 4
 
 research:

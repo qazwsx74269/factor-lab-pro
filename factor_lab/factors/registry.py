@@ -2,14 +2,16 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+
 def ensure_sorted(df: pd.DataFrame):
-    if df is None or len(df)==0:
+    if df is None or len(df) == 0:
         return df
     df = df.copy()
     if not isinstance(df.index, pd.DatetimeIndex):
         df.index = pd.to_datetime(df.index)
     df = df[~df.index.duplicated(keep="last")].sort_index()
     return df
+
 
 def align_to_base(s: pd.Series, base_index: pd.DatetimeIndex) -> pd.Series:
     s = s.copy()
@@ -18,17 +20,19 @@ def align_to_base(s: pd.Series, base_index: pd.DatetimeIndex) -> pd.Series:
     s = s[~s.index.duplicated(keep="last")].sort_index()
     return s.reindex(base_index, method="ffill")
 
+
 def rsi(series: pd.Series, period=14):
     delta = series.diff()
-    gain = delta.clip(lower=0).ewm(com=period-1, adjust=False).mean()
-    loss = (-delta.clip(upper=0)).ewm(com=period-1, adjust=False).mean()
-    return 100 - (100 / (1 + gain/(loss+1e-9)))
+    gain = delta.clip(lower=0).ewm(com=period - 1, adjust=False).mean()
+    loss = (-delta.clip(upper=0)).ewm(com=period - 1, adjust=False).mean()
+    return 100 - (100 / (1 + gain / (loss + 1e-9)))
+
 
 class FactorRegistry:
     def __init__(self):
         self._items = {}  # name -> (fn, required_tfs, desc)
 
-    def register(self, name: str, fn, tfs: list[str], desc: str=""):
+    def register(self, name: str, fn, tfs: list[str], desc: str = ""):
         self._items[name] = (fn, list(tfs), desc)
 
     def names(self):
@@ -38,7 +42,7 @@ class FactorRegistry:
         sd = {tf: ensure_sorted(df) for tf, df in sym_data.items() if df is not None}
         out = {}
         for name, (fn, tfs, _) in self._items.items():
-            if any(tf not in sd or sd[tf] is None or len(sd[tf])==0 for tf in tfs):
+            if any(tf not in sd or sd[tf] is None or len(sd[tf]) == 0 for tf in tfs):
                 out[name] = pd.Series(np.nan, index=base_index)
                 continue
             try:
@@ -47,6 +51,7 @@ class FactorRegistry:
             except Exception:
                 out[name] = pd.Series(np.nan, index=base_index)
         return pd.DataFrame(out, index=base_index)
+
 
 def default_registry() -> FactorRegistry:
     reg = FactorRegistry()
@@ -62,7 +67,7 @@ def default_registry() -> FactorRegistry:
 
     def f_trend_align(sd, base):
         signs = []
-        for tf, p in [("1m",5), ("5m",3), ("15m",1), ("1h",1)]:
+        for tf, p in [("1m", 5), ("5m", 3), ("15m", 1), ("1h", 1)]:
             s = np.sign(sd[tf]["close"].astype(float).pct_change(p))
             signs.append(align_to_base(s, base))
         return pd.concat(signs, axis=1).sum(axis=1)
@@ -71,13 +76,13 @@ def default_registry() -> FactorRegistry:
         c = sd["15m"]["close"].astype(float)
         ma = c.rolling(20).mean()
         st = c.rolling(20).std()
-        return ((c-(ma-2*st))/(4*st+1e-9) - 0.5).reindex(base)
+        return ((c - (ma - 2 * st)) / (4 * st + 1e-9) - 0.5).reindex(base)
 
     def f_zscore_20(sd, base):
         c = sd["15m"]["close"].astype(float)
         ma = c.rolling(20).mean()
         st = c.rolling(20).std()
-        return ((c-ma)/(st+1e-9)).reindex(base)
+        return ((c - ma) / (st + 1e-9)).reindex(base)
 
     def f_macd_signal(sd, base):
         c = sd["15m"]["close"].astype(float)
@@ -85,29 +90,100 @@ def default_registry() -> FactorRegistry:
         e26 = c.ewm(span=26, adjust=False).mean()
         macd = e12 - e26
         sig = macd.ewm(span=9, adjust=False).mean()
-        return ((macd - sig)/(c+1e-9)).reindex(base)
+        return ((macd - sig) / (c + 1e-9)).reindex(base)
 
     def f_vol_ratio(sd, base):
         df = sd["15m"]
         if "volume" not in df.columns:
             return pd.Series(np.nan, index=base)
         v = df["volume"].astype(float)
-        return (v/(v.rolling(20).mean()+1e-9) - 1.0).reindex(base)
+        return (v / (v.rolling(20).mean() + 1e-9) - 1.0).reindex(base)
 
     def f_taker_ratio(sd, base):
         df = sd["15m"]
         if "taker_base" not in df.columns or "volume" not in df.columns:
             return pd.Series(np.nan, index=base)
-        return (df["taker_base"].astype(float)/(df["volume"].astype(float)+1e-9) - 0.5).reindex(base)
+        return (df["taker_base"].astype(float) / (df["volume"].astype(float) + 1e-9) - 0.5).reindex(base)
+
+    # ===== New, frontier-inspired candidates built from currently available OHLCV+taker data =====
+    def f_semivar_ratio(sd, base):
+        c = sd["15m"]["close"].astype(float)
+        r = c.pct_change(1)
+        up = (r.clip(lower=0.0) ** 2).rolling(32).sum()
+        down = ((-r.clip(upper=0.0)) ** 2).rolling(32).sum()
+        return ((down - up) / (down + up + 1e-12)).reindex(base)
+
+    def f_jump_ratio(sd, base):
+        c = sd["15m"]["close"].astype(float)
+        r = np.log(c / c.shift(1)).replace([np.inf, -np.inf], np.nan)
+        rv = (r ** 2).rolling(32).sum()
+        bpv = (np.pi / 2.0) * (r.abs() * r.shift(1).abs()).rolling(32).sum()
+        return ((rv - bpv) / (rv + 1e-12)).reindex(base)
+
+    def f_vol_of_vol(sd, base):
+        c = sd["15m"]["close"].astype(float)
+        r = np.log(c / c.shift(1)).replace([np.inf, -np.inf], np.nan)
+        rv = (r ** 2).rolling(16).mean()
+        vov = rv.rolling(32).std()
+        return (vov / (rv.rolling(32).mean() + 1e-12)).reindex(base)
+
+    def f_oi_shock_proxy(sd, base):
+        # Proxy for OI shock using taker flow acceleration and volume surprise.
+        df = sd["15m"]
+        if "taker_base" not in df.columns or "volume" not in df.columns:
+            return pd.Series(np.nan, index=base)
+        v = df["volume"].astype(float)
+        taker = df["taker_base"].astype(float)
+        taker_ratio = taker / (v + 1e-12)
+        dtaker = taker_ratio.diff(1)
+        v_shock = v / (v.rolling(32).mean() + 1e-12) - 1.0
+        return (dtaker * v_shock).reindex(base)
+
+    def f_signed_volume_pressure(sd, base):
+        df = sd["15m"]
+        if "taker_base" not in df.columns or "volume" not in df.columns:
+            return pd.Series(np.nan, index=base)
+        v = df["volume"].astype(float)
+        taker = df["taker_base"].astype(float)
+        sign_proxy = (2.0 * taker / (v + 1e-12) - 1.0)
+        return (sign_proxy * np.log1p(v)).rolling(12).mean().reindex(base)
+
+    def f_amihud_illiq(sd, base):
+        df = sd["15m"]
+        if "volume" not in df.columns:
+            return pd.Series(np.nan, index=base)
+        c = df["close"].astype(float)
+        v = df["volume"].astype(float)
+        ret = c.pct_change(1).abs()
+        illiq = ret / (v + 1e-12)
+        return np.log1p(illiq.rolling(32).mean()).reindex(base)
+
+    def f_range_asym(sd, base):
+        df = sd["15m"]
+        h = df["high"].astype(float)
+        l = df["low"].astype(float)
+        c = df["close"].astype(float)
+        o = df["open"].astype(float)
+        up = (h - np.maximum(o, c)).clip(lower=0.0)
+        down = (np.minimum(o, c) - l).clip(lower=0.0)
+        return ((down - up) / (h - l + 1e-12)).rolling(16).mean().reindex(base)
 
     reg.register("ret_1h", f_ret_1h, ["1h"], "1h 1bar return")
     reg.register("ret_4h", f_ret_4h, ["1h"], "1h 4bar return")
-    reg.register("trend_align", f_trend_align, ["1m","5m","15m","1h"], "sum of directions across tfs")
+    reg.register("trend_align", f_trend_align, ["1m", "5m", "15m", "1h"], "sum of directions across tfs")
     reg.register("rsi_14_1h", f_rsi_14_1h, ["1h"], "RSI(14) on 1h mapped to base")
     reg.register("bb_pos", f_bb_pos, ["15m"], "BB position (20,2)")
     reg.register("z_score_20", f_zscore_20, ["15m"], "Z-score(20)")
     reg.register("macd_signal", f_macd_signal, ["15m"], "MACD hist normalized")
     reg.register("vol_ratio", f_vol_ratio, ["15m"], "vol/ma20 - 1")
     reg.register("taker_ratio", f_taker_ratio, ["15m"], "taker_base/vol - 0.5")
+
+    reg.register("semivar_ratio", f_semivar_ratio, ["15m"], "down-vs-up realized semivariance imbalance")
+    reg.register("jump_ratio", f_jump_ratio, ["15m"], "realized jump share proxy via RV-BPV")
+    reg.register("vol_of_vol", f_vol_of_vol, ["15m"], "volatility-of-volatility normalized by RV")
+    reg.register("oi_shock_proxy", f_oi_shock_proxy, ["15m"], "taker-flow acceleration * volume shock")
+    reg.register("signed_volume_pressure", f_signed_volume_pressure, ["15m"], "signed taker pressure smoothed")
+    reg.register("amihud_illiq", f_amihud_illiq, ["15m"], "log(rolling Amihud illiquidity)")
+    reg.register("range_asym", f_range_asym, ["15m"], "intrabar upper/lower shadow asymmetry")
 
     return reg
