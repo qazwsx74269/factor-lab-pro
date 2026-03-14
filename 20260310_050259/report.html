@@ -1,0 +1,903 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Factor Lab Pro Report</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;margin:24px;}
+.card{border:1px solid #ddd;border-radius:10px;padding:14px;margin-bottom:16px;}
+small{color:#666}
+table{border-collapse:collapse;width:100%;}
+th,td{border:1px solid #ddd;padding:6px 8px;font-size:12px;}
+th{background:#f7f7f7;}
+</style></head><body>
+<h1>Factor Lab Pro Report</h1>
+<small>Generated at 2026-03-10T05:03:12</small>
+
+<div class="card">
+<h2>Summary</h2>
+<ul>
+<li>steps: 288</li>
+<li>final equity: 0.9612</li>
+<li>total return: -3.88%</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Equity (tail)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>status</th>
+      <th>equity</th>
+      <th>step</th>
+      <th>n_valid_factors</th>
+      <th>top_factor</th>
+      <th>top_factor_w</th>
+      <th>opt_diag</th>
+      <th>t</th>
+      <th>t_entry</th>
+      <th>t_exit</th>
+      <th>ret_hold</th>
+      <th>ret</th>
+      <th>cost_breakdown</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hold</td>
+      <td>0.967777</td>
+      <td>238</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748767</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967777</td>
+      <td>239</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748767</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.965143</td>
+      <td>240</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'ok', 'obj': -0.055610452740815206}</td>
+      <td>2026-03-09 09:29:59.999000</td>
+      <td>2026-03-09 09:44:59.999000</td>
+      <td>2026-03-09 10:44:59.999000</td>
+      <td>-0.00119132</td>
+      <td>-0.00272215</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 0.00013083093874320393, 'total_cost': 0.0015308309387432038, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965143</td>
+      <td>241</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965143</td>
+      <td>242</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965143</td>
+      <td>243</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.967052</td>
+      <td>244</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'ok', 'obj': -0.05561047095580682}</td>
+      <td>2026-03-09 10:29:59.999000</td>
+      <td>2026-03-09 10:44:59.999000</td>
+      <td>2026-03-09 11:44:59.999000</td>
+      <td>0.00197863</td>
+      <td>0.00197863</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967052</td>
+      <td>245</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967052</td>
+      <td>246</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967052</td>
+      <td>247</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748766</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.9661</td>
+      <td>248</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'ok', 'obj': -0.05561048909242258}</td>
+      <td>2026-03-09 11:29:59.999000</td>
+      <td>2026-03-09 11:44:59.999000</td>
+      <td>2026-03-09 12:44:59.999000</td>
+      <td>-0.000984789</td>
+      <td>-0.000984789</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.9661</td>
+      <td>249</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.9661</td>
+      <td>250</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.9661</td>
+      <td>251</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.962373</td>
+      <td>252</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'ok', 'obj': -0.05561050725636799}</td>
+      <td>2026-03-09 12:29:59.999000</td>
+      <td>2026-03-09 12:44:59.999000</td>
+      <td>2026-03-09 13:44:59.999000</td>
+      <td>-0.00226303</td>
+      <td>-0.00385745</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 0.00019441423226745786, 'total_cost': 0.0015944142322674578, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.962373</td>
+      <td>253</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.962373</td>
+      <td>254</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.962373</td>
+      <td>255</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748765</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.960344</td>
+      <td>256</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'ok', 'obj': -0.05561052541130183}</td>
+      <td>2026-03-09 13:29:59.999000</td>
+      <td>2026-03-09 13:44:59.999000</td>
+      <td>2026-03-09 14:44:59.999000</td>
+      <td>-0.00210863</td>
+      <td>-0.00210863</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.960344</td>
+      <td>257</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.960344</td>
+      <td>258</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.960344</td>
+      <td>259</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.961963</td>
+      <td>260</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'ok', 'obj': -0.055610544413093245}</td>
+      <td>2026-03-09 14:29:59.999000</td>
+      <td>2026-03-09 14:44:59.999000</td>
+      <td>2026-03-09 15:44:59.999000</td>
+      <td>0.00168594</td>
+      <td>0.00168594</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961963</td>
+      <td>261</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961963</td>
+      <td>262</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961963</td>
+      <td>263</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748764</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.963576</td>
+      <td>264</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'ok', 'obj': -0.055610561340007726}</td>
+      <td>2026-03-09 15:29:59.999000</td>
+      <td>2026-03-09 15:44:59.999000</td>
+      <td>2026-03-09 16:44:59.999000</td>
+      <td>0.0016768</td>
+      <td>0.0016768</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.963576</td>
+      <td>265</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.963576</td>
+      <td>266</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.963576</td>
+      <td>267</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.961517</td>
+      <td>268</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'ok', 'obj': -0.055610566996343036}</td>
+      <td>2026-03-09 16:29:59.999000</td>
+      <td>2026-03-09 16:44:59.999000</td>
+      <td>2026-03-09 17:44:59.999000</td>
+      <td>-0.000624347</td>
+      <td>-0.00213706</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 0.00011270863829633916, 'total_cost': 0.0015127086382963392, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961517</td>
+      <td>269</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961517</td>
+      <td>270</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961517</td>
+      <td>271</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748763</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.961575</td>
+      <td>272</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748762</td>
+      <td>{'status': 'ok', 'obj': -0.05561056272658514}</td>
+      <td>2026-03-09 17:29:59.999000</td>
+      <td>2026-03-09 17:44:59.999000</td>
+      <td>2026-03-09 18:44:59.999000</td>
+      <td>6.08846e-05</td>
+      <td>6.08846e-05</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961575</td>
+      <td>273</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748762</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961575</td>
+      <td>274</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748762</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961575</td>
+      <td>275</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748762</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.959655</td>
+      <td>276</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'ok', 'obj': -0.05561055830933425}</td>
+      <td>2026-03-09 18:29:59.999000</td>
+      <td>2026-03-09 18:44:59.999000</td>
+      <td>2026-03-09 19:44:59.999000</td>
+      <td>-0.00199704</td>
+      <td>-0.00199704</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.959655</td>
+      <td>277</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.959655</td>
+      <td>278</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.959655</td>
+      <td>279</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.961232</td>
+      <td>280</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'ok', 'obj': -0.05561054956601007}</td>
+      <td>2026-03-09 19:29:59.999000</td>
+      <td>2026-03-09 19:44:59.999000</td>
+      <td>2026-03-09 20:44:59.999000</td>
+      <td>0.00164307</td>
+      <td>0.00164307</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>281</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>282</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>283</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.0748761</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>0.961232</td>
+      <td>284</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.074876</td>
+      <td>{'status': 'ok', 'obj': -0.05561052997878126}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>285</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.074876</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>286</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.074876</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.961232</td>
+      <td>287</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>-0.074876</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>Top factors (by |ICIR|)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>factor</th>
+      <th>ic_mean</th>
+      <th>icir</th>
+      <th>ic_pos</th>
+      <th>n_ic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vol_ratio</td>
+      <td>-0.0641509</td>
+      <td>-0.0641619</td>
+      <td>0.467925</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>macd_signal</td>
+      <td>-0.0528169</td>
+      <td>-0.052891</td>
+      <td>0.471831</td>
+      <td>284</td>
+    </tr>
+    <tr>
+      <td>rsi_14_1h</td>
+      <td>0.0291971</td>
+      <td>0.0293715</td>
+      <td>0.507299</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <td>ret_1h</td>
+      <td>-0.0218978</td>
+      <td>-0.0218631</td>
+      <td>0.489051</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <td>bb_pos</td>
+      <td>-0.0113208</td>
+      <td>-0.0113001</td>
+      <td>0.49434</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>z_score_20</td>
+      <td>-0.0113208</td>
+      <td>-0.0113001</td>
+      <td>0.49434</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>ret_4h</td>
+      <td>0.00763359</td>
+      <td>0.00761923</td>
+      <td>0.503817</td>
+      <td>262</td>
+    </tr>
+    <tr>
+      <td>taker_ratio</td>
+      <td>0.00704225</td>
+      <td>0.00703002</td>
+      <td>0.503521</td>
+      <td>284</td>
+    </tr>
+    <tr>
+      <td>trend_align</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>Strategy Pool Scores</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>active</th>
+      <th>weight</th>
+      <th>score</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cs_factor_0</td>
+      <td>True</td>
+      <td>1</td>
+      <td>-0.388997</td>
+      <td>64</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</body></html>

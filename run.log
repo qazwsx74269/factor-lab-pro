@@ -1,0 +1,16 @@
+2026-02-28 02:43:44,749 | INFO | run | loading data...
+2026-02-28 02:52:44,920 | INFO | run | panel=(57600, 13) factors=9
+2026-02-28 02:54:23,175 | WARNING | run | no valid factors found; fallback to all
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /Users/manzaixing/Desktop/playground/factor-lab-pro/factor_lab/cli.py:103 in │
+│ run                                                                          │
+│                                                                              │
+│   100 │   │   # rolling cov on premia history (simple: store last ic_window) │
+│   101 │   │   # store in ledger temporary                                    │
+│   102 │   │   # We'll approximate Sigma by diagonal+shrink (lightweight)     │
+│ ❱ 103 │   │   Sigma = pd.DataFrame(shrink_cov(np.cov(Z.values.T) if Z.shape[ │
+│   104 │   │   │   │   │   │   │    index=valid_factors, columns=valid_factor │
+│   105 │   │   mu = prem.copy()                                               │
+│   106                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+NameError: name 'np' is not defined

@@ -1,0 +1,1155 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Factor Lab Pro Report</title>
+<style>
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --text:#18212f;
+  --muted:#64748b;
+  --border:#dbe3ee;
+  --green:#16a34a;
+  --red:#dc2626;
+  --blue:#2563eb;
+  --amber:#d97706;
+  --slate:#334155;
+}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;margin:0;background:var(--bg);color:var(--text);line-height:1.6;}
+.wrapper{max-width:1200px;margin:0 auto;padding:24px;}
+.hero{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#fff;border-radius:18px;padding:24px 28px;margin-bottom:18px;box-shadow:0 10px 30px rgba(15,23,42,.18);}
+.hero h1{margin:0 0 8px 0;font-size:30px;}
+.hero p{margin:8px 0;color:rgba(255,255,255,.9)}
+.hero .muted{color:rgba(255,255,255,.72);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(15,23,42,.05);}
+.span-12{grid-column:span 12}
+.span-8{grid-column:span 8}
+.span-6{grid-column:span 6}
+.span-5{grid-column:span 5}
+.span-4{grid-column:span 4}
+.span-3{grid-column:span 3}
+h2{margin:0 0 12px 0;font-size:20px}
+h3{margin:0 0 10px 0;font-size:16px}
+p,li{font-size:14px}
+small,.muted{color:var(--muted)}
+.metric{display:flex;flex-direction:column;gap:6px}
+.metric .label{font-size:13px;color:var(--muted)}
+.metric .value{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.good{color:var(--green)}
+.bad{color:var(--red)}
+.neutral{color:var(--blue)}
+.warntext{color:var(--amber)}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--border);background:#f8fafc;color:var(--slate)}
+.badge.good{background:#f0fdf4;border-color:#86efac;color:#166534}
+.badge.bad{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.badge.warntext{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+.note{padding:12px 14px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-size:14px}
+.warn{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+.goodbox{background:#f0fdf4;border-color:#86efac;color:#166534}
+.dangerbox{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;background:white;}
+th,td{border-bottom:1px solid #e6edf5;padding:9px 10px;font-size:12px;text-align:left;vertical-align:top;white-space:nowrap;}
+th{background:#f8fafc;color:#334155;position:sticky;top:0}
+tr:hover td{background:#fafcff}
+.explain-list{padding-left:18px;margin:8px 0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:99px;margin-right:6px;vertical-align:middle}
+.legend .blue::before{background:var(--blue)}
+.legend .red::before{background:var(--red)}
+.legend .green::before{background:var(--green)}
+svg.chart{width:100%;height:auto;display:block;background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--border);border-radius:12px}
+.callout{padding:14px;border-radius:14px;border:1px solid var(--border);background:#fff}
+.callout h3{margin-bottom:6px}
+.footer{margin-top:18px;color:var(--muted);font-size:12px}
+.two-col{columns:2;column-gap:24px}
+@media (max-width: 900px){
+  .span-8,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}
+  .hero h1{font-size:24px}
+  .two-col{columns:1}
+}
+</style></head><body>
+<div class="wrapper">
+  <div class="hero">
+    <h1>Factor Lab Pro Report</h1>
+    <p>这次回测没有证明系统能稳定赚钱，当前更适合继续研究因子质量和交易成本，而不是直接实盘。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span class="badge bad">暂不适合实盘</span>
+      <span class="badge good">风险等级：低</span>
+      <span class="badge">建议：继续研究，不下场</span>
+    </div>
+    <div class="muted" style="margin-top:10px;">Generated at 2026-03-10T14:08:01 · 面向小白和研究者的解释型报告</div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-3"><div class="metric"><div class="label">最终净值</div><div class="value bad">0.9640</div><div class="muted">初始资金 = 1.0</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">总收益</div><div class="value bad">-3.60%</div><div class="muted">这次回测最终赚/亏了多少</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">最大回撤</div><div class="value good">-3.64%</div><div class="muted">中途最难受的亏损幅度</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">胜率 / 有效交易步</div><div class="value neutral">37.3%</div><div class="muted">67 / 288</div></div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-8">
+      <h2>1. 先看这张图：钱是怎么变的？</h2>
+      <div class="legend"><span class="blue">资金曲线</span><span class="red">回撤</span></div>
+      
+    <svg class='chart' viewBox='0 0 920 320' preserveAspectRatio='none' aria-label='equity and drawdown chart'>
+      <line x1="32" y1="32.00" x2="888" y2="32.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="96.00" x2="888" y2="96.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="160.00" x2="888" y2="160.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="224.00" x2="888" y2="224.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="288.00" x2="888" y2="288.00" stroke="#e2e8f0" stroke-width="1" />
+      <path d='M 32.00 32.00 L 34.98 32.00 L 37.97 32.00 L 40.95 32.00 L 43.93 32.00 L 46.91 32.00 L 49.90 32.00 L 52.88 32.00 L 55.86 32.00 L 58.84 32.00 L 61.83 32.00 L 64.81 32.00 L 67.79 32.00 L 70.77 32.00 L 73.76 32.00 L 76.74 32.00 L 79.72 32.00 L 82.70 32.00 L 85.69 32.00 L 88.67 32.00 L 91.65 32.00 L 94.63 32.00 L 97.62 32.00 L 100.60 32.00 L 103.58 32.00 L 106.56 32.00 L 109.55 32.00 L 112.53 32.00 L 115.51 45.46 L 118.49 45.46 L 121.48 45.46 L 124.46 45.46 L 127.44 62.95 L 130.43 62.95 L 133.41 62.95 L 136.39 62.95 L 139.37 75.82 L 142.36 75.82 L 145.34 75.82 L 148.32 75.82 L 151.30 74.13 L 154.29 74.13 L 157.27 74.13 L 160.25 74.13 L 163.23 85.82 L 166.22 85.82 L 169.20 85.82 L 172.18 85.82 L 175.16 102.84 L 178.15 102.84 L 181.13 102.84 L 184.11 102.84 L 187.09 122.93 L 190.08 122.93 L 193.06 122.93 L 196.04 122.93 L 199.02 133.80 L 202.01 133.80 L 204.99 133.80 L 207.97 133.80 L 210.95 149.25 L 213.94 149.25 L 216.92 149.25 L 219.90 149.25 L 222.89 152.56 L 225.87 152.56 L 228.85 152.56 L 231.83 152.56 L 234.82 152.12 L 237.80 152.12 L 240.78 152.12 L 243.76 152.12 L 246.75 155.16 L 249.73 155.16 L 252.71 155.16 L 255.69 155.16 L 258.68 147.35 L 261.66 147.35 L 264.64 147.35 L 267.62 147.35 L 270.61 174.66 L 273.59 174.66 L 276.57 174.66 L 279.55 174.66 L 282.54 171.68 L 285.52 171.68 L 288.50 171.68 L 291.48 171.68 L 294.47 182.63 L 297.45 182.63 L 300.43 182.63 L 303.41 182.63 L 306.40 186.99 L 309.38 186.99 L 312.36 186.99 L 315.34 186.99 L 318.33 182.27 L 321.31 182.27 L 324.29 182.27 L 327.28 182.27 L 330.26 184.24 L 333.24 184.24 L 336.22 184.24 L 339.21 184.24 L 342.19 183.41 L 345.17 183.41 L 348.15 183.41 L 351.14 183.41 L 354.12 182.19 L 357.10 182.19 L 360.08 182.19 L 363.07 182.19 L 366.05 192.37 L 369.03 192.37 L 372.01 192.37 L 375.00 192.37 L 377.98 200.00 L 380.96 200.00 L 383.94 200.00 L 386.93 200.00 L 389.91 220.96 L 392.89 220.96 L 395.87 220.96 L 398.86 220.96 L 401.84 214.54 L 404.82 214.54 L 407.80 214.54 L 410.79 214.54 L 413.77 217.35 L 416.75 217.35 L 419.74 217.35 L 422.72 217.35 L 425.70 208.97 L 428.68 208.97 L 431.67 208.97 L 434.65 208.97 L 437.63 216.47 L 440.61 216.47 L 443.60 216.47 L 446.58 216.47 L 449.56 217.10 L 452.54 217.10 L 455.53 217.10 L 458.51 217.10 L 461.49 198.79 L 464.47 198.79 L 467.46 198.79 L 470.44 198.79 L 473.42 214.44 L 476.40 214.44 L 479.39 214.44 L 482.37 214.44 L 485.35 210.47 L 488.33 210.47 L 491.32 210.47 L 494.30 210.47 L 497.28 225.16 L 500.26 225.16 L 503.25 225.16 L 506.23 225.16 L 509.21 234.68 L 512.20 234.68 L 515.18 234.68 L 518.16 234.68 L 521.14 233.97 L 524.13 233.97 L 527.11 233.97 L 530.09 233.97 L 533.07 234.67 L 536.06 234.67 L 539.04 234.67 L 542.02 234.67 L 545.00 240.04 L 547.99 240.04 L 550.97 240.04 L 553.95 240.04 L 556.93 254.10 L 559.92 254.10 L 562.90 254.10 L 565.88 254.10 L 568.86 240.38 L 571.85 240.38 L 574.83 240.38 L 577.81 240.38 L 580.79 243.70 L 583.78 243.70 L 586.76 243.70 L 589.74 243.70 L 592.72 269.11 L 595.71 269.11 L 598.69 269.11 L 601.67 269.11 L 604.66 246.50 L 607.64 246.50 L 610.62 246.50 L 613.60 246.50 L 616.59 255.35 L 619.57 255.35 L 622.55 255.35 L 625.53 255.35 L 628.52 251.43 L 631.50 251.43 L 634.48 251.43 L 637.46 251.43 L 640.45 245.11 L 643.43 245.11 L 646.41 245.11 L 649.39 245.11 L 652.38 243.08 L 655.36 243.08 L 658.34 243.08 L 661.32 243.08 L 664.31 249.80 L 667.29 249.80 L 670.27 249.80 L 673.25 249.80 L 676.24 236.40 L 679.22 236.40 L 682.20 236.40 L 685.18 236.40 L 688.17 263.12 L 691.15 263.12 L 694.13 263.12 L 697.11 263.12 L 700.10 251.64 L 703.08 251.64 L 706.06 251.64 L 709.05 251.64 L 712.03 240.20 L 715.01 240.20 L 717.99 240.20 L 720.98 240.20 L 723.96 254.80 L 726.94 254.80 L 729.92 254.80 L 732.91 254.80 L 735.89 254.39 L 738.87 254.39 L 741.85 254.39 L 744.84 254.39 L 747.82 268.01 L 750.80 268.01 L 753.78 268.01 L 756.77 268.01 L 759.75 256.82 L 762.73 256.82 L 765.71 256.82 L 768.70 256.82 L 771.68 257.73 L 774.66 257.73 L 777.64 257.73 L 780.63 257.73 L 783.61 278.63 L 786.59 278.63 L 789.57 278.63 L 792.56 278.63 L 795.54 261.33 L 798.52 261.33 L 801.51 261.33 L 804.49 261.33 L 807.47 267.22 L 810.45 267.22 L 813.44 267.22 L 816.42 267.22 L 819.40 268.63 L 822.38 268.63 L 825.37 268.63 L 828.35 268.63 L 831.33 275.13 L 834.31 275.13 L 837.30 275.13 L 840.28 275.13 L 843.26 286.46 L 846.24 286.46 L 849.23 286.46 L 852.21 286.46 L 855.19 278.94 L 858.17 278.94 L 861.16 278.94 L 864.14 278.94 L 867.12 288.00 L 870.10 288.00 L 873.09 288.00 L 876.07 288.00 L 879.05 288.00 L 882.03 288.00 L 885.02 288.00 L 888.00 288.00' fill='none' stroke='#dc2626' stroke-width='2' opacity='0.65'></path>
+      <path d='M 32.00 34.89 L 34.98 34.89 L 37.97 34.89 L 40.95 34.89 L 43.93 34.89 L 46.91 34.89 L 49.90 34.89 L 52.88 34.89 L 55.86 34.89 L 58.84 34.89 L 61.83 34.89 L 64.81 34.89 L 67.79 34.89 L 70.77 34.89 L 73.76 34.89 L 76.74 34.89 L 79.72 34.89 L 82.70 34.89 L 85.69 34.89 L 88.67 34.89 L 91.65 34.89 L 94.63 34.89 L 97.62 34.89 L 100.60 34.89 L 103.58 32.00 L 106.56 32.00 L 109.55 32.00 L 112.53 32.00 L 115.51 45.46 L 118.49 45.46 L 121.48 45.46 L 124.46 45.46 L 127.44 62.95 L 130.43 62.95 L 133.41 62.95 L 136.39 62.95 L 139.37 75.82 L 142.36 75.82 L 145.34 75.82 L 148.32 75.82 L 151.30 74.13 L 154.29 74.13 L 157.27 74.13 L 160.25 74.13 L 163.23 85.82 L 166.22 85.82 L 169.20 85.82 L 172.18 85.82 L 175.16 102.84 L 178.15 102.84 L 181.13 102.84 L 184.11 102.84 L 187.09 122.93 L 190.08 122.93 L 193.06 122.93 L 196.04 122.93 L 199.02 133.80 L 202.01 133.80 L 204.99 133.80 L 207.97 133.80 L 210.95 149.25 L 213.94 149.25 L 216.92 149.25 L 219.90 149.25 L 222.89 152.56 L 225.87 152.56 L 228.85 152.56 L 231.83 152.56 L 234.82 152.12 L 237.80 152.12 L 240.78 152.12 L 243.76 152.12 L 246.75 155.16 L 249.73 155.16 L 252.71 155.16 L 255.69 155.16 L 258.68 147.35 L 261.66 147.35 L 264.64 147.35 L 267.62 147.35 L 270.61 174.66 L 273.59 174.66 L 276.57 174.66 L 279.55 174.66 L 282.54 171.68 L 285.52 171.68 L 288.50 171.68 L 291.48 171.68 L 294.47 182.63 L 297.45 182.63 L 300.43 182.63 L 303.41 182.63 L 306.40 186.99 L 309.38 186.99 L 312.36 186.99 L 315.34 186.99 L 318.33 182.27 L 321.31 182.27 L 324.29 182.27 L 327.28 182.27 L 330.26 184.24 L 333.24 184.24 L 336.22 184.24 L 339.21 184.24 L 342.19 183.41 L 345.17 183.41 L 348.15 183.41 L 351.14 183.41 L 354.12 182.19 L 357.10 182.19 L 360.08 182.19 L 363.07 182.19 L 366.05 192.37 L 369.03 192.37 L 372.01 192.37 L 375.00 192.37 L 377.98 200.00 L 380.96 200.00 L 383.94 200.00 L 386.93 200.00 L 389.91 220.96 L 392.89 220.96 L 395.87 220.96 L 398.86 220.96 L 401.84 214.54 L 404.82 214.54 L 407.80 214.54 L 410.79 214.54 L 413.77 217.35 L 416.75 217.35 L 419.74 217.35 L 422.72 217.35 L 425.70 208.97 L 428.68 208.97 L 431.67 208.97 L 434.65 208.97 L 437.63 216.47 L 440.61 216.47 L 443.60 216.47 L 446.58 216.47 L 449.56 217.10 L 452.54 217.10 L 455.53 217.10 L 458.51 217.10 L 461.49 198.79 L 464.47 198.79 L 467.46 198.79 L 470.44 198.79 L 473.42 214.44 L 476.40 214.44 L 479.39 214.44 L 482.37 214.44 L 485.35 210.47 L 488.33 210.47 L 491.32 210.47 L 494.30 210.47 L 497.28 225.16 L 500.26 225.16 L 503.25 225.16 L 506.23 225.16 L 509.21 234.68 L 512.20 234.68 L 515.18 234.68 L 518.16 234.68 L 521.14 233.97 L 524.13 233.97 L 527.11 233.97 L 530.09 233.97 L 533.07 234.67 L 536.06 234.67 L 539.04 234.67 L 542.02 234.67 L 545.00 240.04 L 547.99 240.04 L 550.97 240.04 L 553.95 240.04 L 556.93 254.10 L 559.92 254.10 L 562.90 254.10 L 565.88 254.10 L 568.86 240.38 L 571.85 240.38 L 574.83 240.38 L 577.81 240.38 L 580.79 243.70 L 583.78 243.70 L 586.76 243.70 L 589.74 243.70 L 592.72 269.11 L 595.71 269.11 L 598.69 269.11 L 601.67 269.11 L 604.66 246.50 L 607.64 246.50 L 610.62 246.50 L 613.60 246.50 L 616.59 255.35 L 619.57 255.35 L 622.55 255.35 L 625.53 255.35 L 628.52 251.43 L 631.50 251.43 L 634.48 251.43 L 637.46 251.43 L 640.45 245.11 L 643.43 245.11 L 646.41 245.11 L 649.39 245.11 L 652.38 243.08 L 655.36 243.08 L 658.34 243.08 L 661.32 243.08 L 664.31 249.80 L 667.29 249.80 L 670.27 249.80 L 673.25 249.80 L 676.24 236.40 L 679.22 236.40 L 682.20 236.40 L 685.18 236.40 L 688.17 263.12 L 691.15 263.12 L 694.13 263.12 L 697.11 263.12 L 700.10 251.64 L 703.08 251.64 L 706.06 251.64 L 709.05 251.64 L 712.03 240.20 L 715.01 240.20 L 717.99 240.20 L 720.98 240.20 L 723.96 254.80 L 726.94 254.80 L 729.92 254.80 L 732.91 254.80 L 735.89 254.39 L 738.87 254.39 L 741.85 254.39 L 744.84 254.39 L 747.82 268.01 L 750.80 268.01 L 753.78 268.01 L 756.77 268.01 L 759.75 256.82 L 762.73 256.82 L 765.71 256.82 L 768.70 256.82 L 771.68 257.73 L 774.66 257.73 L 777.64 257.73 L 780.63 257.73 L 783.61 278.63 L 786.59 278.63 L 789.57 278.63 L 792.56 278.63 L 795.54 261.33 L 798.52 261.33 L 801.51 261.33 L 804.49 261.33 L 807.47 267.22 L 810.45 267.22 L 813.44 267.22 L 816.42 267.22 L 819.40 268.63 L 822.38 268.63 L 825.37 268.63 L 828.35 268.63 L 831.33 275.13 L 834.31 275.13 L 837.30 275.13 L 840.28 275.13 L 843.26 286.46 L 846.24 286.46 L 849.23 286.46 L 852.21 286.46 L 855.19 278.94 L 858.17 278.94 L 861.16 278.94 L 864.14 278.94 L 867.12 288.00 L 870.10 288.00 L 873.09 288.00 L 876.07 288.00 L 879.05 288.00 L 882.03 288.00 L 885.02 288.00 L 888.00 288.00' fill='none' stroke='#2563eb' stroke-width='3'></path>
+      <circle cx='888.00' cy='288.00' r='4' fill='#2563eb'></circle>
+      <circle cx='888.00' cy='288.00' r='4' fill='#dc2626'></circle>
+      <text x='32' y='20' fill='#334155' font-size='12'>Equity 0.964 → 1.000</text>
+      <text x='700' y='20' fill='#991b1b' font-size='12'>Drawdown -3.6% → 0.0%</text>
+    </svg>
+    
+      <ul class="explain-list">
+        <li><b>蓝线向右上</b>：整体在赚钱。</li>
+        <li><b>红线越往下</b>：中间越痛苦，说明你实盘更可能中途扛不住。</li>
+        <li><b>如果蓝线不强、红线很深</b>：这不是一个适合小白直接拿真钱测试的系统。</li>
+      </ul>
+    </div>
+    <div class="card span-4">
+      <h2>2. 一句话结论</h2>
+      <div class="callout dangerbox">
+        <h3>暂不适合实盘</h3>
+        <p>因为这次回测最终没有证明系统能赚钱，所以更适合继续优化因子和组合，而不是直接上真钱。</p>
+      </div>
+      <div style="height:10px"></div>
+      <div class="callout">
+        <h3>小白怎么利用这份报告赚钱？</h3>
+        <ol class="explain-list">
+          <li>先筛掉 <b>总收益 ≤ 0</b> 的方案。</li>
+          <li>再筛掉 <b>回撤过深</b>、你拿不住的方案。</li>
+          <li>优先保留 <b>ICIR 更稳</b> 的因子。</li>
+          <li>最后只拿 <b>小资金</b> 做真实验证，不要一上来重仓。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-4">
+      <h2>3. 回测过程发生了什么</h2>
+      <ul class="explain-list">
+        <li><b>Warmup</b>：前期攒样本，先不交易。</li>
+        <li><b>Hold</b>：这一步沿用之前仓位，不重新调仓。</li>
+        <li><b>Ok</b>：真实产生一次回测收益。</li>
+        <li><b>No future</b>：数据尾部不够了，无法再看未来收益。</li>
+      </ul>
+      <div class="note">这能帮助你理解：回测不是每一步都在疯狂交易，而是在固定节奏里决定“什么时候该动、什么时候该等”。</div>
+    </div>
+    <div class="card span-4">
+      <h2>4. 回测数据怎么读</h2>
+      <ul class="explain-list">
+        <li><b>ret_hold</b>：理论收益，不算手续费和滑点。</li>
+        <li><b>ret</b>：真实收益，已经扣除交易成本。</li>
+        <li><b>equity</b>：累计净值。</li>
+        <li><b>top_factor</b>：当前最重要的主导因子。</li>
+        <li><b>top_factor_w</b>：这个因子当下权重有多高。</li>
+      </ul>
+      <div class="note warn">重点不是“理论上赚多少”，而是 <b>扣掉成本后还剩多少</b>。</div>
+    </div>
+    <div class="card span-4">
+      <h2>5. 小白最该看的 4 件事</h2>
+      <ul class="explain-list">
+        <li><b>总收益</b>：有没有正收益。</li>
+        <li><b>最大回撤</b>：你扛不扛得住。</li>
+        <li><b>胜率</b>：赚钱是靠稳定小胜，还是少数暴击。</li>
+        <li><b>主导因子是否稳定</b>：是不是今天一个说法，明天一个说法。</li>
+      </ul>
+      <div class="note goodbox">能长期赚钱的系统，往往不是“最刺激”的，而是“最稳定”的。</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-6">
+      <h2>6. 因子报告怎么用</h2>
+      <ul class="explain-list">
+        <li><b>IC</b>：因子和未来收益是否同方向。</li>
+        <li><b>ICIR</b>：因子是不是长期稳定有效。</li>
+        <li><b>优先用 ICIR 高的</b>：因为它更不容易只是运气。</li>
+        <li><b>多个因子组合</b>：通常比押注单一因子更稳。</li>
+      </ul>
+      <div class="note">如果你想利用这个系统赚钱，最合理的动作不是“盲信一个神指标”，而是找到 <b>稳定有效的一组因子</b> 做组合。</div>
+    </div>
+    <div class="card span-6">
+      <h2>7. 实盘使用建议</h2>
+      <div class="two-col">
+        <div>
+          <h3>适合做的</h3>
+          <ul class="explain-list">
+            <li>先用小资金验证。</li>
+            <li>优先看回撤和稳定性。</li>
+            <li>保留表现持续好的因子。</li>
+            <li>每隔一段时间重新评估。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>不要做的</h3>
+          <ul class="explain-list">
+            <li>看到一次回测赚钱就重仓。</li>
+            <li>忽略交易成本。</li>
+            <li>把偶然暴利当稳定系统。</li>
+            <li>看不懂回撤还硬上。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>8. 机器给你的结论卡</h2>
+      <div class="grid" style="margin-bottom:0;">
+        <div class="span-4">
+          <div class="callout dangerbox"><h3>是否值得继续</h3><p>因为这次回测最终没有证明系统能赚钱，所以更适合继续优化因子和组合，而不是直接上真钱。</p></div>
+        </div>
+        <div class="span-4">
+          <div class="callout"><h3>风险等级</h3><p>回撤相对可控，更适合逐步验证和长期跟踪。</p></div>
+        </div>
+        <div class="span-4">
+          <div class="callout"><h3>建议动作</h3><p>先优化因子稳定性、减少成本、扩大样本，再做下一轮验证。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>9. Top Factors（重点看稳定性）</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>factor</th>
+      <th>ic_mean</th>
+      <th>icir</th>
+      <th>ic_pos</th>
+      <th>n_ic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ret_1h</td>
+      <td>-0.0656934</td>
+      <td>-0.0657154</td>
+      <td>0.467153</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <td>vol_ratio</td>
+      <td>-0.0566038</td>
+      <td>-0.0565876</td>
+      <td>0.471698</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>ret_4h</td>
+      <td>-0.0534351</td>
+      <td>-0.0534093</td>
+      <td>0.473282</td>
+      <td>262</td>
+    </tr>
+    <tr>
+      <td>rsi_14_1h</td>
+      <td>-0.0291971</td>
+      <td>-0.0293715</td>
+      <td>0.478102</td>
+      <td>274</td>
+    </tr>
+    <tr>
+      <td>taker_ratio</td>
+      <td>0.028169</td>
+      <td>0.0281305</td>
+      <td>0.514085</td>
+      <td>284</td>
+    </tr>
+    <tr>
+      <td>z_score_20</td>
+      <td>-0.0113208</td>
+      <td>-0.0113001</td>
+      <td>0.49434</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>bb_pos</td>
+      <td>-0.0113208</td>
+      <td>-0.0113001</td>
+      <td>0.49434</td>
+      <td>265</td>
+    </tr>
+    <tr>
+      <td>macd_signal</td>
+      <td>-0.0105634</td>
+      <td>-0.010564</td>
+      <td>0.492958</td>
+      <td>284</td>
+    </tr>
+    <tr>
+      <td>trend_align</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>10. 回测摘要表（给小白看的翻译版）</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>问题</th>
+      <th>结论</th>
+      <th>怎么理解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>这次最终赚了吗？</td>
+      <td>-3.60%</td>
+      <td>正数代表赚钱，负数代表亏钱。</td>
+    </tr>
+    <tr>
+      <td>过程痛苦吗？</td>
+      <td>-3.64%</td>
+      <td>越负说明中途越难受，越容易拿不住。</td>
+    </tr>
+    <tr>
+      <td>赚钱稳定吗？</td>
+      <td>37.3% 胜率</td>
+      <td>胜率高不代表一定更赚钱，但能帮助理解收益风格。</td>
+    </tr>
+    <tr>
+      <td>真正发生了多少次有效交易？</td>
+      <td>67</td>
+      <td>总步数 288 中，真正产生收益记录的次数。</td>
+    </tr>
+    <tr>
+      <td>最常主导的因子是谁？</td>
+      <td>ret_1h</td>
+      <td>它是这个样本期里最常站在 C 位的因子。</td>
+    </tr>
+    <tr>
+      <td>主导因子稳定吗？</td>
+      <td>100.00%</td>
+      <td>占比越高，说明这个主导因子越稳定地反复出现。</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>11. 最近回测明细</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>status</th>
+      <th>equity</th>
+      <th>step</th>
+      <th>n_valid_factors</th>
+      <th>top_factor</th>
+      <th>top_factor_w</th>
+      <th>opt_diag</th>
+      <th>t</th>
+      <th>t_entry</th>
+      <th>t_exit</th>
+      <th>ret_hold</th>
+      <th>ret</th>
+      <th>cost_breakdown</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hold</td>
+      <td>0.968818</td>
+      <td>238</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968818</td>
+      <td>239</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.966883</td>
+      <td>240</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749516</td>
+      <td>{'status': 'ok', 'obj': -0.05561804873364015}</td>
+      <td>2026-03-09 18:29:59.999000</td>
+      <td>2026-03-09 18:44:59.999000</td>
+      <td>2026-03-09 19:44:59.999000</td>
+      <td>-0.00199704</td>
+      <td>-0.00199704</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966883</td>
+      <td>241</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749516</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966883</td>
+      <td>242</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749516</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966883</td>
+      <td>243</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749516</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.968472</td>
+      <td>244</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749514</td>
+      <td>{'status': 'ok', 'obj': -0.055619927051713966}</td>
+      <td>2026-03-09 19:29:59.999000</td>
+      <td>2026-03-09 19:44:59.999000</td>
+      <td>2026-03-09 20:44:59.999000</td>
+      <td>0.00164307</td>
+      <td>0.00164307</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968472</td>
+      <td>245</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749514</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968472</td>
+      <td>246</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749514</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968472</td>
+      <td>247</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749514</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.968343</td>
+      <td>248</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749512</td>
+      <td>{'status': 'ok', 'obj': -0.05561988631029413}</td>
+      <td>2026-03-09 20:29:59.999000</td>
+      <td>2026-03-09 20:44:59.999000</td>
+      <td>2026-03-09 21:44:59.999000</td>
+      <td>-0.000133129</td>
+      <td>-0.000133129</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968343</td>
+      <td>249</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749512</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968343</td>
+      <td>250</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749512</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.968343</td>
+      <td>251</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749512</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.965374</td>
+      <td>252</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'ok', 'obj': -0.05561986362129211}</td>
+      <td>2026-03-09 21:29:59.999000</td>
+      <td>2026-03-09 21:44:59.999000</td>
+      <td>2026-03-09 22:44:59.999000</td>
+      <td>-0.00154305</td>
+      <td>-0.00306615</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 0.0001230923782976696, 'total_cost': 0.0015230923782976696, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965374</td>
+      <td>253</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965374</td>
+      <td>254</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965374</td>
+      <td>255</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.967832</td>
+      <td>256</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'ok', 'obj': -0.05561983554489015}</td>
+      <td>2026-03-09 22:29:59.999000</td>
+      <td>2026-03-09 22:44:59.999000</td>
+      <td>2026-03-09 23:44:59.999000</td>
+      <td>0.00397877</td>
+      <td>0.00254648</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 3.2296321774151375e-05, 'total_cost': 0.0014322963217741514, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967832</td>
+      <td>257</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967832</td>
+      <td>258</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.967832</td>
+      <td>259</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.966995</td>
+      <td>260</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'ok', 'obj': -0.05561983407199738}</td>
+      <td>2026-03-09 23:29:59.999000</td>
+      <td>2026-03-09 23:44:59.999000</td>
+      <td>2026-03-10 00:44:59.999000</td>
+      <td>0.000609099</td>
+      <td>-0.000864602</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 7.3700944970613e-05, 'total_cost': 0.001473700944970613, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966995</td>
+      <td>261</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966995</td>
+      <td>262</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966995</td>
+      <td>263</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.966795</td>
+      <td>264</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'ok', 'obj': -0.05561981281591775}</td>
+      <td>2026-03-10 00:29:59.999000</td>
+      <td>2026-03-10 00:44:59.999000</td>
+      <td>2026-03-10 01:44:59.999000</td>
+      <td>-0.000207064</td>
+      <td>-0.000207064</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966795</td>
+      <td>265</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966795</td>
+      <td>266</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.966795</td>
+      <td>267</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.965871</td>
+      <td>268</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'ok', 'obj': -0.05561978720528674}</td>
+      <td>2026-03-10 01:29:59.999000</td>
+      <td>2026-03-10 01:44:59.999000</td>
+      <td>2026-03-10 02:44:59.999000</td>
+      <td>0.000566277</td>
+      <td>-0.00095597</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 0.00012224689607460024, 'total_cost': 0.0015222468960746003, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965871</td>
+      <td>269</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965871</td>
+      <td>270</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.965871</td>
+      <td>271</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.964262</td>
+      <td>272</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749511</td>
+      <td>{'status': 'ok', 'obj': -0.055619783431217575}</td>
+      <td>2026-03-10 02:29:59.999000</td>
+      <td>2026-03-10 02:44:59.999000</td>
+      <td>2026-03-10 03:44:59.999000</td>
+      <td>-0.000185698</td>
+      <td>-0.0016654</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 7.970655722499404e-05, 'total_cost': 0.001479706557224994, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964262</td>
+      <td>273</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749511</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964262</td>
+      <td>274</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749511</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964262</td>
+      <td>275</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749511</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.96533</td>
+      <td>276</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'ok', 'obj': -0.05561985063760477}</td>
+      <td>2026-03-10 03:29:59.999000</td>
+      <td>2026-03-10 03:44:59.999000</td>
+      <td>2026-03-10 04:44:59.999000</td>
+      <td>0.00110746</td>
+      <td>0.00110746</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.96533</td>
+      <td>277</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.96533</td>
+      <td>278</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.96533</td>
+      <td>279</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.074951</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>0.964043</td>
+      <td>280</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'ok', 'obj': -0.05561983491115634}</td>
+      <td>2026-03-10 04:29:59.999000</td>
+      <td>2026-03-10 04:44:59.999000</td>
+      <td>2026-03-10 05:44:59.999000</td>
+      <td>8.90963e-05</td>
+      <td>-0.00133339</td>
+      <td>{'notional': 2000000.0, 'fee_cost': 0.001, 'slip_cost': 0.0004, 'impact_cost': 2.2481516169828875e-05, 'total_cost': 0.0014224815161698288, 'dw_l1': 2.0}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>281</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>282</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>283</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749509</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>0.964043</td>
+      <td>284</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749517</td>
+      <td>{'status': 'ok', 'obj': -0.055619434608328994}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>285</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749517</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>286</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749517</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>0.964043</td>
+      <td>287</td>
+      <td>4</td>
+      <td>ret_1h</td>
+      <td>-0.0749517</td>
+      <td>{'status': 'hold'}</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>12. Strategy Pool Scores</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>active</th>
+      <th>weight</th>
+      <th>score</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cs_factor_0</td>
+      <td>True</td>
+      <td>1</td>
+      <td>-0.353763</td>
+      <td>64</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>核心原则：<b>先证明它稳定赚钱，再考虑放大仓位</b>。回测是过滤器，不是提款机。</div>
+  </div>
+</div>
+</body></html>

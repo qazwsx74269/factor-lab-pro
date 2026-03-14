@@ -1,0 +1,863 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Factor Lab Pro Report</title>
+<style>
+:root{
+  --bg:#f6f8fb;
+  --card:#ffffff;
+  --text:#18212f;
+  --muted:#64748b;
+  --border:#dbe3ee;
+  --green:#16a34a;
+  --red:#dc2626;
+  --blue:#2563eb;
+  --amber:#d97706;
+  --slate:#334155;
+}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;margin:0;background:var(--bg);color:var(--text);line-height:1.6;}
+.wrapper{max-width:1200px;margin:0 auto;padding:24px;}
+.hero{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:#fff;border-radius:18px;padding:24px 28px;margin-bottom:18px;box-shadow:0 10px 30px rgba(15,23,42,.18);}
+.hero h1{margin:0 0 8px 0;font-size:30px;}
+.hero p{margin:8px 0;color:rgba(255,255,255,.9)}
+.hero .muted{color:rgba(255,255,255,.72);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;margin-bottom:16px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:0 4px 14px rgba(15,23,42,.05);}
+.span-12{grid-column:span 12}
+.span-8{grid-column:span 8}
+.span-6{grid-column:span 6}
+.span-5{grid-column:span 5}
+.span-4{grid-column:span 4}
+.span-3{grid-column:span 3}
+h2{margin:0 0 12px 0;font-size:20px}
+h3{margin:0 0 10px 0;font-size:16px}
+p,li{font-size:14px}
+small,.muted{color:var(--muted)}
+.metric{display:flex;flex-direction:column;gap:6px}
+.metric .label{font-size:13px;color:var(--muted)}
+.metric .value{font-size:28px;font-weight:700;letter-spacing:-.02em}
+.good{color:var(--green)}
+.bad{color:var(--red)}
+.neutral{color:var(--blue)}
+.warntext{color:var(--amber)}
+.badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:600;border:1px solid var(--border);background:#f8fafc;color:var(--slate)}
+.badge.good{background:#f0fdf4;border-color:#86efac;color:#166534}
+.badge.bad{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.badge.warntext{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+.note{padding:12px 14px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-size:14px}
+.warn{background:#fff7ed;border-color:#fdba74;color:#9a3412}
+.goodbox{background:#f0fdf4;border-color:#86efac;color:#166534}
+.dangerbox{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;background:white;}
+th,td{border-bottom:1px solid #e6edf5;padding:9px 10px;font-size:12px;text-align:left;vertical-align:top;white-space:nowrap;}
+th{background:#f8fafc;color:#334155;position:sticky;top:0}
+tr:hover td{background:#fafcff}
+.explain-list{padding-left:18px;margin:8px 0}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:8px}
+.legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:99px;margin-right:6px;vertical-align:middle}
+.legend .blue::before{background:var(--blue)}
+.legend .red::before{background:var(--red)}
+.legend .green::before{background:var(--green)}
+svg.chart{width:100%;height:auto;display:block;background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--border);border-radius:12px}
+.callout{padding:14px;border-radius:14px;border:1px solid var(--border);background:#fff}
+.callout h3{margin-bottom:6px}
+.footer{margin-top:18px;color:var(--muted);font-size:12px}
+.two-col{columns:2;column-gap:24px}
+@media (max-width: 900px){
+  .span-8,.span-6,.span-5,.span-4,.span-3{grid-column:span 12}
+  .hero h1{font-size:24px}
+  .two-col{columns:1}
+}
+</style></head><body>
+<div class="wrapper">
+  <div class="hero">
+    <h1>Factor Lab Pro Report</h1>
+    <p>这次回测没有证明系统能稳定赚钱，当前更适合继续研究因子质量和交易成本，而不是直接实盘。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
+      <span class="badge bad">暂不适合实盘</span>
+      <span class="badge good">风险等级：低</span>
+      <span class="badge">建议：继续研究，不下场</span>
+    </div>
+    <div class="muted" style="margin-top:10px;">Generated at 2026-03-11T12:08:55 · 面向小白和研究者的解释型报告</div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-3"><div class="metric"><div class="label">最终净值</div><div class="value bad">1.0000</div><div class="muted">初始资金 = 1.0</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">总收益</div><div class="value bad">0.00%</div><div class="muted">这次回测最终赚/亏了多少</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">最大回撤</div><div class="value good">0.00%</div><div class="muted">中途最难受的亏损幅度</div></div></div>
+    <div class="card span-3"><div class="metric"><div class="label">胜率 / 有效交易步</div><div class="value neutral">0.0%</div><div class="muted">0 / 288</div></div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-8">
+      <h2>1. 先看这张图：钱是怎么变的？</h2>
+      <div class="legend"><span class="blue">资金曲线</span><span class="red">回撤</span></div>
+      
+    <svg class='chart' viewBox='0 0 920 320' preserveAspectRatio='none' aria-label='equity and drawdown chart'>
+      <line x1="32" y1="32.00" x2="888" y2="32.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="96.00" x2="888" y2="96.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="160.00" x2="888" y2="160.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="224.00" x2="888" y2="224.00" stroke="#e2e8f0" stroke-width="1" /><line x1="32" y1="288.00" x2="888" y2="288.00" stroke="#e2e8f0" stroke-width="1" />
+      <path d='M 32.00 160.00 L 34.98 160.00 L 37.97 160.00 L 40.95 160.00 L 43.93 160.00 L 46.91 160.00 L 49.90 160.00 L 52.88 160.00 L 55.86 160.00 L 58.84 160.00 L 61.83 160.00 L 64.81 160.00 L 67.79 160.00 L 70.77 160.00 L 73.76 160.00 L 76.74 160.00 L 79.72 160.00 L 82.70 160.00 L 85.69 160.00 L 88.67 160.00 L 91.65 160.00 L 94.63 160.00 L 97.62 160.00 L 100.60 160.00 L 103.58 160.00 L 106.56 160.00 L 109.55 160.00 L 112.53 160.00 L 115.51 160.00 L 118.49 160.00 L 121.48 160.00 L 124.46 160.00 L 127.44 160.00 L 130.43 160.00 L 133.41 160.00 L 136.39 160.00 L 139.37 160.00 L 142.36 160.00 L 145.34 160.00 L 148.32 160.00 L 151.30 160.00 L 154.29 160.00 L 157.27 160.00 L 160.25 160.00 L 163.23 160.00 L 166.22 160.00 L 169.20 160.00 L 172.18 160.00 L 175.16 160.00 L 178.15 160.00 L 181.13 160.00 L 184.11 160.00 L 187.09 160.00 L 190.08 160.00 L 193.06 160.00 L 196.04 160.00 L 199.02 160.00 L 202.01 160.00 L 204.99 160.00 L 207.97 160.00 L 210.95 160.00 L 213.94 160.00 L 216.92 160.00 L 219.90 160.00 L 222.89 160.00 L 225.87 160.00 L 228.85 160.00 L 231.83 160.00 L 234.82 160.00 L 237.80 160.00 L 240.78 160.00 L 243.76 160.00 L 246.75 160.00 L 249.73 160.00 L 252.71 160.00 L 255.69 160.00 L 258.68 160.00 L 261.66 160.00 L 264.64 160.00 L 267.62 160.00 L 270.61 160.00 L 273.59 160.00 L 276.57 160.00 L 279.55 160.00 L 282.54 160.00 L 285.52 160.00 L 288.50 160.00 L 291.48 160.00 L 294.47 160.00 L 297.45 160.00 L 300.43 160.00 L 303.41 160.00 L 306.40 160.00 L 309.38 160.00 L 312.36 160.00 L 315.34 160.00 L 318.33 160.00 L 321.31 160.00 L 324.29 160.00 L 327.28 160.00 L 330.26 160.00 L 333.24 160.00 L 336.22 160.00 L 339.21 160.00 L 342.19 160.00 L 345.17 160.00 L 348.15 160.00 L 351.14 160.00 L 354.12 160.00 L 357.10 160.00 L 360.08 160.00 L 363.07 160.00 L 366.05 160.00 L 369.03 160.00 L 372.01 160.00 L 375.00 160.00 L 377.98 160.00 L 380.96 160.00 L 383.94 160.00 L 386.93 160.00 L 389.91 160.00 L 392.89 160.00 L 395.87 160.00 L 398.86 160.00 L 401.84 160.00 L 404.82 160.00 L 407.80 160.00 L 410.79 160.00 L 413.77 160.00 L 416.75 160.00 L 419.74 160.00 L 422.72 160.00 L 425.70 160.00 L 428.68 160.00 L 431.67 160.00 L 434.65 160.00 L 437.63 160.00 L 440.61 160.00 L 443.60 160.00 L 446.58 160.00 L 449.56 160.00 L 452.54 160.00 L 455.53 160.00 L 458.51 160.00 L 461.49 160.00 L 464.47 160.00 L 467.46 160.00 L 470.44 160.00 L 473.42 160.00 L 476.40 160.00 L 479.39 160.00 L 482.37 160.00 L 485.35 160.00 L 488.33 160.00 L 491.32 160.00 L 494.30 160.00 L 497.28 160.00 L 500.26 160.00 L 503.25 160.00 L 506.23 160.00 L 509.21 160.00 L 512.20 160.00 L 515.18 160.00 L 518.16 160.00 L 521.14 160.00 L 524.13 160.00 L 527.11 160.00 L 530.09 160.00 L 533.07 160.00 L 536.06 160.00 L 539.04 160.00 L 542.02 160.00 L 545.00 160.00 L 547.99 160.00 L 550.97 160.00 L 553.95 160.00 L 556.93 160.00 L 559.92 160.00 L 562.90 160.00 L 565.88 160.00 L 568.86 160.00 L 571.85 160.00 L 574.83 160.00 L 577.81 160.00 L 580.79 160.00 L 583.78 160.00 L 586.76 160.00 L 589.74 160.00 L 592.72 160.00 L 595.71 160.00 L 598.69 160.00 L 601.67 160.00 L 604.66 160.00 L 607.64 160.00 L 610.62 160.00 L 613.60 160.00 L 616.59 160.00 L 619.57 160.00 L 622.55 160.00 L 625.53 160.00 L 628.52 160.00 L 631.50 160.00 L 634.48 160.00 L 637.46 160.00 L 640.45 160.00 L 643.43 160.00 L 646.41 160.00 L 649.39 160.00 L 652.38 160.00 L 655.36 160.00 L 658.34 160.00 L 661.32 160.00 L 664.31 160.00 L 667.29 160.00 L 670.27 160.00 L 673.25 160.00 L 676.24 160.00 L 679.22 160.00 L 682.20 160.00 L 685.18 160.00 L 688.17 160.00 L 691.15 160.00 L 694.13 160.00 L 697.11 160.00 L 700.10 160.00 L 703.08 160.00 L 706.06 160.00 L 709.05 160.00 L 712.03 160.00 L 715.01 160.00 L 717.99 160.00 L 720.98 160.00 L 723.96 160.00 L 726.94 160.00 L 729.92 160.00 L 732.91 160.00 L 735.89 160.00 L 738.87 160.00 L 741.85 160.00 L 744.84 160.00 L 747.82 160.00 L 750.80 160.00 L 753.78 160.00 L 756.77 160.00 L 759.75 160.00 L 762.73 160.00 L 765.71 160.00 L 768.70 160.00 L 771.68 160.00 L 774.66 160.00 L 777.64 160.00 L 780.63 160.00 L 783.61 160.00 L 786.59 160.00 L 789.57 160.00 L 792.56 160.00 L 795.54 160.00 L 798.52 160.00 L 801.51 160.00 L 804.49 160.00 L 807.47 160.00 L 810.45 160.00 L 813.44 160.00 L 816.42 160.00 L 819.40 160.00 L 822.38 160.00 L 825.37 160.00 L 828.35 160.00 L 831.33 160.00 L 834.31 160.00 L 837.30 160.00 L 840.28 160.00 L 843.26 160.00 L 846.24 160.00 L 849.23 160.00 L 852.21 160.00 L 855.19 160.00 L 858.17 160.00 L 861.16 160.00 L 864.14 160.00 L 867.12 160.00 L 870.10 160.00 L 873.09 160.00 L 876.07 160.00 L 879.05 160.00 L 882.03 160.00 L 885.02 160.00 L 888.00 160.00' fill='none' stroke='#dc2626' stroke-width='2' opacity='0.65'></path>
+      <path d='M 32.00 160.00 L 34.98 160.00 L 37.97 160.00 L 40.95 160.00 L 43.93 160.00 L 46.91 160.00 L 49.90 160.00 L 52.88 160.00 L 55.86 160.00 L 58.84 160.00 L 61.83 160.00 L 64.81 160.00 L 67.79 160.00 L 70.77 160.00 L 73.76 160.00 L 76.74 160.00 L 79.72 160.00 L 82.70 160.00 L 85.69 160.00 L 88.67 160.00 L 91.65 160.00 L 94.63 160.00 L 97.62 160.00 L 100.60 160.00 L 103.58 160.00 L 106.56 160.00 L 109.55 160.00 L 112.53 160.00 L 115.51 160.00 L 118.49 160.00 L 121.48 160.00 L 124.46 160.00 L 127.44 160.00 L 130.43 160.00 L 133.41 160.00 L 136.39 160.00 L 139.37 160.00 L 142.36 160.00 L 145.34 160.00 L 148.32 160.00 L 151.30 160.00 L 154.29 160.00 L 157.27 160.00 L 160.25 160.00 L 163.23 160.00 L 166.22 160.00 L 169.20 160.00 L 172.18 160.00 L 175.16 160.00 L 178.15 160.00 L 181.13 160.00 L 184.11 160.00 L 187.09 160.00 L 190.08 160.00 L 193.06 160.00 L 196.04 160.00 L 199.02 160.00 L 202.01 160.00 L 204.99 160.00 L 207.97 160.00 L 210.95 160.00 L 213.94 160.00 L 216.92 160.00 L 219.90 160.00 L 222.89 160.00 L 225.87 160.00 L 228.85 160.00 L 231.83 160.00 L 234.82 160.00 L 237.80 160.00 L 240.78 160.00 L 243.76 160.00 L 246.75 160.00 L 249.73 160.00 L 252.71 160.00 L 255.69 160.00 L 258.68 160.00 L 261.66 160.00 L 264.64 160.00 L 267.62 160.00 L 270.61 160.00 L 273.59 160.00 L 276.57 160.00 L 279.55 160.00 L 282.54 160.00 L 285.52 160.00 L 288.50 160.00 L 291.48 160.00 L 294.47 160.00 L 297.45 160.00 L 300.43 160.00 L 303.41 160.00 L 306.40 160.00 L 309.38 160.00 L 312.36 160.00 L 315.34 160.00 L 318.33 160.00 L 321.31 160.00 L 324.29 160.00 L 327.28 160.00 L 330.26 160.00 L 333.24 160.00 L 336.22 160.00 L 339.21 160.00 L 342.19 160.00 L 345.17 160.00 L 348.15 160.00 L 351.14 160.00 L 354.12 160.00 L 357.10 160.00 L 360.08 160.00 L 363.07 160.00 L 366.05 160.00 L 369.03 160.00 L 372.01 160.00 L 375.00 160.00 L 377.98 160.00 L 380.96 160.00 L 383.94 160.00 L 386.93 160.00 L 389.91 160.00 L 392.89 160.00 L 395.87 160.00 L 398.86 160.00 L 401.84 160.00 L 404.82 160.00 L 407.80 160.00 L 410.79 160.00 L 413.77 160.00 L 416.75 160.00 L 419.74 160.00 L 422.72 160.00 L 425.70 160.00 L 428.68 160.00 L 431.67 160.00 L 434.65 160.00 L 437.63 160.00 L 440.61 160.00 L 443.60 160.00 L 446.58 160.00 L 449.56 160.00 L 452.54 160.00 L 455.53 160.00 L 458.51 160.00 L 461.49 160.00 L 464.47 160.00 L 467.46 160.00 L 470.44 160.00 L 473.42 160.00 L 476.40 160.00 L 479.39 160.00 L 482.37 160.00 L 485.35 160.00 L 488.33 160.00 L 491.32 160.00 L 494.30 160.00 L 497.28 160.00 L 500.26 160.00 L 503.25 160.00 L 506.23 160.00 L 509.21 160.00 L 512.20 160.00 L 515.18 160.00 L 518.16 160.00 L 521.14 160.00 L 524.13 160.00 L 527.11 160.00 L 530.09 160.00 L 533.07 160.00 L 536.06 160.00 L 539.04 160.00 L 542.02 160.00 L 545.00 160.00 L 547.99 160.00 L 550.97 160.00 L 553.95 160.00 L 556.93 160.00 L 559.92 160.00 L 562.90 160.00 L 565.88 160.00 L 568.86 160.00 L 571.85 160.00 L 574.83 160.00 L 577.81 160.00 L 580.79 160.00 L 583.78 160.00 L 586.76 160.00 L 589.74 160.00 L 592.72 160.00 L 595.71 160.00 L 598.69 160.00 L 601.67 160.00 L 604.66 160.00 L 607.64 160.00 L 610.62 160.00 L 613.60 160.00 L 616.59 160.00 L 619.57 160.00 L 622.55 160.00 L 625.53 160.00 L 628.52 160.00 L 631.50 160.00 L 634.48 160.00 L 637.46 160.00 L 640.45 160.00 L 643.43 160.00 L 646.41 160.00 L 649.39 160.00 L 652.38 160.00 L 655.36 160.00 L 658.34 160.00 L 661.32 160.00 L 664.31 160.00 L 667.29 160.00 L 670.27 160.00 L 673.25 160.00 L 676.24 160.00 L 679.22 160.00 L 682.20 160.00 L 685.18 160.00 L 688.17 160.00 L 691.15 160.00 L 694.13 160.00 L 697.11 160.00 L 700.10 160.00 L 703.08 160.00 L 706.06 160.00 L 709.05 160.00 L 712.03 160.00 L 715.01 160.00 L 717.99 160.00 L 720.98 160.00 L 723.96 160.00 L 726.94 160.00 L 729.92 160.00 L 732.91 160.00 L 735.89 160.00 L 738.87 160.00 L 741.85 160.00 L 744.84 160.00 L 747.82 160.00 L 750.80 160.00 L 753.78 160.00 L 756.77 160.00 L 759.75 160.00 L 762.73 160.00 L 765.71 160.00 L 768.70 160.00 L 771.68 160.00 L 774.66 160.00 L 777.64 160.00 L 780.63 160.00 L 783.61 160.00 L 786.59 160.00 L 789.57 160.00 L 792.56 160.00 L 795.54 160.00 L 798.52 160.00 L 801.51 160.00 L 804.49 160.00 L 807.47 160.00 L 810.45 160.00 L 813.44 160.00 L 816.42 160.00 L 819.40 160.00 L 822.38 160.00 L 825.37 160.00 L 828.35 160.00 L 831.33 160.00 L 834.31 160.00 L 837.30 160.00 L 840.28 160.00 L 843.26 160.00 L 846.24 160.00 L 849.23 160.00 L 852.21 160.00 L 855.19 160.00 L 858.17 160.00 L 861.16 160.00 L 864.14 160.00 L 867.12 160.00 L 870.10 160.00 L 873.09 160.00 L 876.07 160.00 L 879.05 160.00 L 882.03 160.00 L 885.02 160.00 L 888.00 160.00' fill='none' stroke='#2563eb' stroke-width='3'></path>
+      <circle cx='888.00' cy='160.00' r='4' fill='#2563eb'></circle>
+      <circle cx='888.00' cy='160.00' r='4' fill='#dc2626'></circle>
+      <text x='32' y='20' fill='#334155' font-size='12'>Equity 1.000 → 1.000</text>
+      <text x='700' y='20' fill='#991b1b' font-size='12'>Drawdown -0.0% → 0.0%</text>
+    </svg>
+    
+      <ul class="explain-list">
+        <li><b>蓝线向右上</b>：整体在赚钱。</li>
+        <li><b>红线越往下</b>：中间越痛苦，说明你实盘更可能中途扛不住。</li>
+        <li><b>如果蓝线不强、红线很深</b>：这不是一个适合小白直接拿真钱测试的系统。</li>
+      </ul>
+    </div>
+    <div class="card span-4">
+      <h2>2. 一句话结论</h2>
+      <div class="callout dangerbox">
+        <h3>暂不适合实盘</h3>
+        <p>因为这次回测最终没有证明系统能赚钱，所以更适合继续优化因子和组合，而不是直接上真钱。</p>
+      </div>
+      <div style="height:10px"></div>
+      <div class="callout">
+        <h3>小白怎么利用这份报告赚钱？</h3>
+        <ol class="explain-list">
+          <li>先筛掉 <b>总收益 ≤ 0</b> 的方案。</li>
+          <li>再筛掉 <b>回撤过深</b>、你拿不住的方案。</li>
+          <li>优先保留 <b>ICIR 更稳</b> 的因子。</li>
+          <li>最后只拿 <b>小资金</b> 做真实验证，不要一上来重仓。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-4">
+      <h2>3. 回测过程发生了什么</h2>
+      <ul class="explain-list">
+        <li><b>Warmup</b>：前期攒样本，先不交易。</li>
+        <li><b>Hold</b>：这一步沿用之前仓位，不重新调仓。</li>
+        <li><b>Ok</b>：真实产生一次回测收益。</li>
+        <li><b>No future</b>：数据尾部不够了，无法再看未来收益。</li>
+      </ul>
+      <div class="note">这能帮助你理解：回测不是每一步都在疯狂交易，而是在固定节奏里决定“什么时候该动、什么时候该等”。</div>
+    </div>
+    <div class="card span-4">
+      <h2>4. 回测数据怎么读</h2>
+      <ul class="explain-list">
+        <li><b>ret_hold</b>：理论收益，不算手续费和滑点。</li>
+        <li><b>ret</b>：真实收益，已经扣除交易成本。</li>
+        <li><b>equity</b>：累计净值。</li>
+        <li><b>top_factor</b>：当前最重要的主导因子。</li>
+        <li><b>top_factor_w</b>：这个因子当下权重有多高。</li>
+      </ul>
+      <div class="note warn">重点不是“理论上赚多少”，而是 <b>扣掉成本后还剩多少</b>。</div>
+    </div>
+    <div class="card span-4">
+      <h2>5. 小白最该看的 4 件事</h2>
+      <ul class="explain-list">
+        <li><b>总收益</b>：有没有正收益。</li>
+        <li><b>最大回撤</b>：你扛不扛得住。</li>
+        <li><b>胜率</b>：赚钱是靠稳定小胜，还是少数暴击。</li>
+        <li><b>主导因子是否稳定</b>：是不是今天一个说法，明天一个说法。</li>
+      </ul>
+      <div class="note goodbox">能长期赚钱的系统，往往不是“最刺激”的，而是“最稳定”的。</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-6">
+      <h2>6. 因子报告怎么用</h2>
+      <ul class="explain-list">
+        <li><b>IC</b>：因子和未来收益是否同方向。</li>
+        <li><b>ICIR</b>：因子是不是长期稳定有效。</li>
+        <li><b>优先用 ICIR 高的</b>：因为它更不容易只是运气。</li>
+        <li><b>多个因子组合</b>：通常比押注单一因子更稳。</li>
+      </ul>
+      <div class="note">如果你想利用这个系统赚钱，最合理的动作不是“盲信一个神指标”，而是找到 <b>稳定有效的一组因子</b> 做组合。</div>
+    </div>
+    <div class="card span-6">
+      <h2>7. 实盘使用建议</h2>
+      <div class="two-col">
+        <div>
+          <h3>适合做的</h3>
+          <ul class="explain-list">
+            <li>先用小资金验证。</li>
+            <li>优先看回撤和稳定性。</li>
+            <li>保留表现持续好的因子。</li>
+            <li>每隔一段时间重新评估。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>不要做的</h3>
+          <ul class="explain-list">
+            <li>看到一次回测赚钱就重仓。</li>
+            <li>忽略交易成本。</li>
+            <li>把偶然暴利当稳定系统。</li>
+            <li>看不懂回撤还硬上。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>8. 机器给你的结论卡</h2>
+      <div class="grid" style="margin-bottom:0;">
+        <div class="span-4">
+          <div class="callout dangerbox"><h3>是否值得继续</h3><p>因为这次回测最终没有证明系统能赚钱，所以更适合继续优化因子和组合，而不是直接上真钱。</p></div>
+        </div>
+        <div class="span-4">
+          <div class="callout"><h3>风险等级</h3><p>回撤相对可控，更适合逐步验证和长期跟踪。</p></div>
+        </div>
+        <div class="span-4">
+          <div class="callout"><h3>建议动作</h3><p>先优化因子稳定性、减少成本、扩大样本，再做下一轮验证。</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>9. Top Factors（重点看稳定性）</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>factor</th>
+      <th>ic_mean</th>
+      <th>icir</th>
+      <th>ic_pos</th>
+      <th>n_ic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vol_ratio</td>
+      <td>-0.136364</td>
+      <td>-0.137388</td>
+      <td>0.431818</td>
+      <td>264</td>
+    </tr>
+    <tr>
+      <td>ret_4h</td>
+      <td>-0.111111</td>
+      <td>-0.111589</td>
+      <td>0.444444</td>
+      <td>261</td>
+    </tr>
+    <tr>
+      <td>ret_1h</td>
+      <td>-0.0769231</td>
+      <td>-0.0770102</td>
+      <td>0.461538</td>
+      <td>273</td>
+    </tr>
+    <tr>
+      <td>rsi_14_1h</td>
+      <td>-0.047619</td>
+      <td>-0.0475857</td>
+      <td>0.47619</td>
+      <td>273</td>
+    </tr>
+    <tr>
+      <td>bb_pos</td>
+      <td>-0.0378788</td>
+      <td>-0.0378341</td>
+      <td>0.481061</td>
+      <td>264</td>
+    </tr>
+    <tr>
+      <td>z_score_20</td>
+      <td>-0.0378788</td>
+      <td>-0.0378341</td>
+      <td>0.481061</td>
+      <td>264</td>
+    </tr>
+    <tr>
+      <td>macd_signal</td>
+      <td>-0.0353357</td>
+      <td>-0.0353578</td>
+      <td>0.480565</td>
+      <td>283</td>
+    </tr>
+    <tr>
+      <td>taker_ratio</td>
+      <td>-0.0106007</td>
+      <td>-0.0105826</td>
+      <td>0.4947</td>
+      <td>283</td>
+    </tr>
+    <tr>
+      <td>trend_align</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>10. 回测摘要表（给小白看的翻译版）</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>问题</th>
+      <th>结论</th>
+      <th>怎么理解</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>这次最终赚了吗？</td>
+      <td>0.00%</td>
+      <td>正数代表赚钱，负数代表亏钱。</td>
+    </tr>
+    <tr>
+      <td>过程痛苦吗？</td>
+      <td>0.00%</td>
+      <td>越负说明中途越难受，越容易拿不住。</td>
+    </tr>
+    <tr>
+      <td>赚钱稳定吗？</td>
+      <td>0.0% 胜率</td>
+      <td>胜率高不代表一定更赚钱，但能帮助理解收益风格。</td>
+    </tr>
+    <tr>
+      <td>真正发生了多少次有效交易？</td>
+      <td>0</td>
+      <td>总步数 288 中，真正产生收益记录的次数。</td>
+    </tr>
+    <tr>
+      <td>最常主导的因子是谁？</td>
+      <td>vol_ratio</td>
+      <td>它是这个样本期里最常站在 C 位的因子。</td>
+    </tr>
+    <tr>
+      <td>主导因子稳定吗？</td>
+      <td>100.00%</td>
+      <td>占比越高，说明这个主导因子越稳定地反复出现。</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>11. 最近回测明细</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>status</th>
+      <th>equity</th>
+      <th>step</th>
+      <th>n_valid_factors</th>
+      <th>top_factor</th>
+      <th>top_factor_w</th>
+      <th>opt_diag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>238</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>239</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>240</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>241</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>242</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>243</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>244</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>245</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>246</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>247</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>248</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>249</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>250</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>251</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>252</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>253</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>254</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>255</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>256</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>257</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>258</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>259</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>260</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>261</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>262</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>263</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>264</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>265</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>266</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>267</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>268</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>269</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>270</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>271</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>272</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>273</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>274</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>275</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>276</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>277</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>278</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>279</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>280</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>281</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>282</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>283</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>no_signal</td>
+      <td>1</td>
+      <td>284</td>
+      <td>4</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>{'status': 'zero_mu'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>285</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>286</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+    <tr>
+      <td>hold</td>
+      <td>1</td>
+      <td>287</td>
+      <td>4</td>
+      <td>vol_ratio</td>
+      <td>0</td>
+      <td>{'status': 'hold'}</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card span-12">
+      <h2>12. Strategy Pool Scores</h2>
+      <div class='table-wrap'><table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>active</th>
+      <th>weight</th>
+      <th>score</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cs_factor_0</td>
+      <td>True</td>
+      <td>0.333333</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>cs_factor_1</td>
+      <td>True</td>
+      <td>0.333333</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>cs_factor_2</td>
+      <td>True</td>
+      <td>0.333333</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>核心原则：<b>先证明它稳定赚钱，再考虑放大仓位</b>。回测是过滤器，不是提款机。</div>
+  </div>
+</div>
+</body></html>

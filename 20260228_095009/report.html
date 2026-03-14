@@ -1,0 +1,903 @@
+<!doctype html>
+<html><head><meta charset="utf-8"/>
+<title>Factor Lab Pro Report</title>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial;margin:24px;}
+.card{border:1px solid #ddd;border-radius:10px;padding:14px;margin-bottom:16px;}
+small{color:#666}
+table{border-collapse:collapse;width:100%;}
+th,td{border:1px solid #ddd;padding:6px 8px;font-size:12px;}
+th{background:#f7f7f7;}
+</style></head><body>
+<h1>Factor Lab Pro Report</h1>
+<small>Generated at 2026-02-28T10:01:30</small>
+
+<div class="card">
+<h2>Summary</h2>
+<ul>
+<li>steps: 2880</li>
+<li>final equity: 0.5780</li>
+<li>total return: -42.20%</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Equity (tail)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>status</th>
+      <th>t</th>
+      <th>t_entry</th>
+      <th>t_exit</th>
+      <th>ret_hold</th>
+      <th>ret</th>
+      <th>equity</th>
+      <th>cost_breakdown</th>
+      <th>step</th>
+      <th>n_valid_factors</th>
+      <th>top_factor</th>
+      <th>top_factor_w</th>
+      <th>opt_diag</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 13:44:59.999000</td>
+      <td>2026-02-27 13:59:59.999000</td>
+      <td>2026-02-27 14:59:59.999000</td>
+      <td>0.00107342</td>
+      <td>0.00107342</td>
+      <td>0.580568</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2830</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.013766</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 13:59:59.999000</td>
+      <td>2026-02-27 14:14:59.999000</td>
+      <td>2026-02-27 15:14:59.999000</td>
+      <td>-0.000496706</td>
+      <td>-0.000496706</td>
+      <td>0.58028</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2831</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.013766</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 14:14:59.999000</td>
+      <td>2026-02-27 14:29:59.999000</td>
+      <td>2026-02-27 15:29:59.999000</td>
+      <td>-0.0014136</td>
+      <td>-0.00217475</td>
+      <td>0.579018</td>
+      <td>{'notional': 999999.9999999999, 'fee_cost': 0.0004999999999999999, 'slip_cost': 0.0002, 'impact_cost': 6.114424642781347e-05, 'total_cost': 0.0007611442464278134, 'dw_l1': 0.9999999999999999}</td>
+      <td>2832</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0134595</td>
+      <td>{'status': 'ok', 'obj': -0.09863009845626507}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 14:29:59.999000</td>
+      <td>2026-02-27 14:44:59.999000</td>
+      <td>2026-02-27 15:44:59.999000</td>
+      <td>-0.00175223</td>
+      <td>-0.00175223</td>
+      <td>0.578003</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2833</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0134595</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 14:44:59.999000</td>
+      <td>2026-02-27 14:59:59.999000</td>
+      <td>2026-02-27 15:59:59.999000</td>
+      <td>0.00383779</td>
+      <td>0.00383779</td>
+      <td>0.580221</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2834</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0134595</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 14:59:59.999000</td>
+      <td>2026-02-27 15:14:59.999000</td>
+      <td>2026-02-27 16:14:59.999000</td>
+      <td>0.00285112</td>
+      <td>0.00285112</td>
+      <td>0.581876</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2835</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0134595</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 15:14:59.999000</td>
+      <td>2026-02-27 15:29:59.999000</td>
+      <td>2026-02-27 16:29:59.999000</td>
+      <td>-0.00267357</td>
+      <td>-0.00369875</td>
+      <td>0.579724</td>
+      <td>{'notional': 1333333.3333333333, 'fee_cost': 0.0006666666666666666, 'slip_cost': 0.0002666666666666667, 'impact_cost': 9.184105594665949e-05, 'total_cost': 0.0010251743892799928, 'dw_l1': 1.3333333333333333}</td>
+      <td>2836</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0131538</td>
+      <td>{'status': 'ok', 'obj': -0.09782118584966092}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 15:29:59.999000</td>
+      <td>2026-02-27 15:44:59.999000</td>
+      <td>2026-02-27 16:44:59.999000</td>
+      <td>-0.0016449</td>
+      <td>-0.0016449</td>
+      <td>0.57877</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2837</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0131538</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 15:44:59.999000</td>
+      <td>2026-02-27 15:59:59.999000</td>
+      <td>2026-02-27 16:59:59.999000</td>
+      <td>-0.000370323</td>
+      <td>-0.000370323</td>
+      <td>0.578556</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2838</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0131538</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 15:59:59.999000</td>
+      <td>2026-02-27 16:14:59.999000</td>
+      <td>2026-02-27 17:14:59.999000</td>
+      <td>0.000180421</td>
+      <td>0.000180421</td>
+      <td>0.57866</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2839</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0131538</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 16:14:59.999000</td>
+      <td>2026-02-27 16:29:59.999000</td>
+      <td>2026-02-27 17:29:59.999000</td>
+      <td>-0.00032086</td>
+      <td>-0.00205052</td>
+      <td>0.577473</td>
+      <td>{'notional': 2000000.0000000002, 'fee_cost': 0.001, 'slip_cost': 0.0004000000000000001, 'impact_cost': 0.0003296643303353518, 'total_cost': 0.001729664330335352, 'dw_l1': 2.0}</td>
+      <td>2840</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0130407</td>
+      <td>{'status': 'ok', 'obj': -0.09756560426308068}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 16:29:59.999000</td>
+      <td>2026-02-27 16:44:59.999000</td>
+      <td>2026-02-27 17:44:59.999000</td>
+      <td>0.000707022</td>
+      <td>0.000707022</td>
+      <td>0.577882</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2841</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0130407</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 16:44:59.999000</td>
+      <td>2026-02-27 16:59:59.999000</td>
+      <td>2026-02-27 17:59:59.999000</td>
+      <td>0.00126311</td>
+      <td>0.00126311</td>
+      <td>0.578612</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2842</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0130407</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 16:59:59.999000</td>
+      <td>2026-02-27 17:14:59.999000</td>
+      <td>2026-02-27 18:14:59.999000</td>
+      <td>0.00480636</td>
+      <td>0.00480636</td>
+      <td>0.581393</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2843</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0130407</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 17:14:59.999000</td>
+      <td>2026-02-27 17:29:59.999000</td>
+      <td>2026-02-27 18:29:59.999000</td>
+      <td>0.000124638</td>
+      <td>-0.000682292</td>
+      <td>0.580996</td>
+      <td>{'notional': 999999.9999999999, 'fee_cost': 0.0004999999999999999, 'slip_cost': 0.0002, 'impact_cost': 0.00010692991427000231, 'total_cost': 0.0008069299142700023, 'dw_l1': 0.9999999999999999}</td>
+      <td>2844</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0151648</td>
+      <td>{'status': 'ok', 'obj': -0.10197826514622774}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 17:29:59.999000</td>
+      <td>2026-02-27 17:44:59.999000</td>
+      <td>2026-02-27 18:44:59.999000</td>
+      <td>0.00406345</td>
+      <td>0.00406345</td>
+      <td>0.583357</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2845</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0151648</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 17:44:59.999000</td>
+      <td>2026-02-27 17:59:59.999000</td>
+      <td>2026-02-27 18:59:59.999000</td>
+      <td>0.00752879</td>
+      <td>0.00752879</td>
+      <td>0.587749</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2846</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0151648</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 17:59:59.999000</td>
+      <td>2026-02-27 18:14:59.999000</td>
+      <td>2026-02-27 19:14:59.999000</td>
+      <td>0.00390212</td>
+      <td>0.00390212</td>
+      <td>0.590042</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2847</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0151648</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 18:14:59.999000</td>
+      <td>2026-02-27 18:29:59.999000</td>
+      <td>2026-02-27 19:29:59.999000</td>
+      <td>-0.00338316</td>
+      <td>-0.00481374</td>
+      <td>0.587202</td>
+      <td>{'notional': 1666666.6666666667, 'fee_cost': 0.0008333333333333334, 'slip_cost': 0.0003333333333333334, 'impact_cost': 0.0002639203415770684, 'total_cost': 0.001430587008243735, 'dw_l1': 1.6666666666666667}</td>
+      <td>2848</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145917</td>
+      <td>{'status': 'ok', 'obj': -0.10010760943463462}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 18:29:59.999000</td>
+      <td>2026-02-27 18:44:59.999000</td>
+      <td>2026-02-27 19:44:59.999000</td>
+      <td>-0.00329777</td>
+      <td>-0.00329777</td>
+      <td>0.585266</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2849</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145917</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 18:44:59.999000</td>
+      <td>2026-02-27 18:59:59.999000</td>
+      <td>2026-02-27 19:59:59.999000</td>
+      <td>-0.00669952</td>
+      <td>-0.00669952</td>
+      <td>0.581345</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2850</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145917</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 18:59:59.999000</td>
+      <td>2026-02-27 19:14:59.999000</td>
+      <td>2026-02-27 20:14:59.999000</td>
+      <td>-0.00291704</td>
+      <td>-0.00291704</td>
+      <td>0.579649</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2851</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145917</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 19:14:59.999000</td>
+      <td>2026-02-27 19:29:59.999000</td>
+      <td>2026-02-27 20:29:59.999000</td>
+      <td>0.00178748</td>
+      <td>-0.000270691</td>
+      <td>0.579492</td>
+      <td>{'notional': 1666666.6666666667, 'fee_cost': 0.0008333333333333334, 'slip_cost': 0.0003333333333333334, 'impact_cost': 0.0008915016217192243, 'total_cost': 0.002058168288385891, 'dw_l1': 1.6666666666666667}</td>
+      <td>2852</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0140024</td>
+      <td>{'status': 'ok', 'obj': -0.09810107640591245}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 19:29:59.999000</td>
+      <td>2026-02-27 19:44:59.999000</td>
+      <td>2026-02-27 20:44:59.999000</td>
+      <td>0.00437592</td>
+      <td>0.00437592</td>
+      <td>0.582028</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2853</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0140024</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 19:44:59.999000</td>
+      <td>2026-02-27 19:59:59.999000</td>
+      <td>2026-02-27 20:59:59.999000</td>
+      <td>0.00233982</td>
+      <td>0.00233982</td>
+      <td>0.583389</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2854</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0140024</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 19:59:59.999000</td>
+      <td>2026-02-27 20:14:59.999000</td>
+      <td>2026-02-27 21:14:59.999000</td>
+      <td>0.00189398</td>
+      <td>0.00189398</td>
+      <td>0.584494</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2855</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0140024</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 20:14:59.999000</td>
+      <td>2026-02-27 20:29:59.999000</td>
+      <td>2026-02-27 21:29:59.999000</td>
+      <td>-0.00091501</td>
+      <td>-0.00156181</td>
+      <td>0.583582</td>
+      <td>{'notional': 666666.6666666666, 'fee_cost': 0.0003333333333333333, 'slip_cost': 0.00013333333333333334, 'impact_cost': 0.0001801359773542113, 'total_cost': 0.000646802644020878, 'dw_l1': 0.6666666666666666}</td>
+      <td>2856</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0136876</td>
+      <td>{'status': 'ok', 'obj': -0.09810839904688648}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 20:29:59.999000</td>
+      <td>2026-02-27 20:44:59.999000</td>
+      <td>2026-02-27 21:44:59.999000</td>
+      <td>-0.000885918</td>
+      <td>-0.000885918</td>
+      <td>0.583064</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2857</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0136876</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 20:44:59.999000</td>
+      <td>2026-02-27 20:59:59.999000</td>
+      <td>2026-02-27 21:59:59.999000</td>
+      <td>0.00194257</td>
+      <td>0.00194257</td>
+      <td>0.584197</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2858</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0136876</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 20:59:59.999000</td>
+      <td>2026-02-27 21:14:59.999000</td>
+      <td>2026-02-27 22:14:59.999000</td>
+      <td>0.00257772</td>
+      <td>0.00257772</td>
+      <td>0.585703</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2859</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0136876</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 21:14:59.999000</td>
+      <td>2026-02-27 21:29:59.999000</td>
+      <td>2026-02-27 22:29:59.999000</td>
+      <td>0.000773565</td>
+      <td>8.04635e-06</td>
+      <td>0.585708</td>
+      <td>{'notional': 999999.9999999999, 'fee_cost': 0.0004999999999999999, 'slip_cost': 0.0002, 'impact_cost': 6.551880027331808e-05, 'total_cost': 0.0007655188002733181, 'dw_l1': 0.9999999999999999}</td>
+      <td>2860</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145473</td>
+      <td>{'status': 'ok', 'obj': -0.10085434933602125}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 21:29:59.999000</td>
+      <td>2026-02-27 21:44:59.999000</td>
+      <td>2026-02-27 22:44:59.999000</td>
+      <td>-0.00213627</td>
+      <td>-0.00213627</td>
+      <td>0.584457</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2861</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145473</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 21:44:59.999000</td>
+      <td>2026-02-27 21:59:59.999000</td>
+      <td>2026-02-27 22:59:59.999000</td>
+      <td>-0.00389336</td>
+      <td>-0.00389336</td>
+      <td>0.582181</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2862</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145473</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 21:59:59.999000</td>
+      <td>2026-02-27 22:14:59.999000</td>
+      <td>2026-02-27 23:14:59.999000</td>
+      <td>-0.00421138</td>
+      <td>-0.00421138</td>
+      <td>0.579729</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2863</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0145473</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 22:14:59.999000</td>
+      <td>2026-02-27 22:29:59.999000</td>
+      <td>2026-02-27 23:29:59.999000</td>
+      <td>-0.00283358</td>
+      <td>-0.00361321</td>
+      <td>0.577635</td>
+      <td>{'notional': 999999.9999999999, 'fee_cost': 0.0004999999999999999, 'slip_cost': 0.0002, 'impact_cost': 7.963113563102121e-05, 'total_cost': 0.0007796311356310212, 'dw_l1': 0.9999999999999999}</td>
+      <td>2864</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0154213</td>
+      <td>{'status': 'ok', 'obj': -0.10212424940710785}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 22:29:59.999000</td>
+      <td>2026-02-27 22:44:59.999000</td>
+      <td>2026-02-27 23:44:59.999000</td>
+      <td>-0.00234188</td>
+      <td>-0.00234188</td>
+      <td>0.576282</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2865</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0154213</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 22:44:59.999000</td>
+      <td>2026-02-27 22:59:59.999000</td>
+      <td>2026-02-27 23:59:59.999000</td>
+      <td>-0.00132584</td>
+      <td>-0.00132584</td>
+      <td>0.575518</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2866</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0154213</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 22:59:59.999000</td>
+      <td>2026-02-27 23:14:59.999000</td>
+      <td>2026-02-28 00:14:59.999000</td>
+      <td>-0.000824239</td>
+      <td>-0.000824239</td>
+      <td>0.575043</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2867</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0154213</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 23:14:59.999000</td>
+      <td>2026-02-27 23:29:59.999000</td>
+      <td>2026-02-28 00:29:59.999000</td>
+      <td>-0.000195458</td>
+      <td>-0.0014456</td>
+      <td>0.574212</td>
+      <td>{'notional': 1333333.3333333333, 'fee_cost': 0.0006666666666666666, 'slip_cost': 0.0002666666666666667, 'impact_cost': 0.00031680758331391486, 'total_cost': 0.0012501409166472482, 'dw_l1': 1.3333333333333333}</td>
+      <td>2868</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0150966</td>
+      <td>{'status': 'ok', 'obj': -0.10114083056592503}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 23:29:59.999000</td>
+      <td>2026-02-27 23:44:59.999000</td>
+      <td>2026-02-28 00:44:59.999000</td>
+      <td>0.00060214</td>
+      <td>0.00060214</td>
+      <td>0.574558</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2869</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0150966</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 23:44:59.999000</td>
+      <td>2026-02-27 23:59:59.999000</td>
+      <td>2026-02-28 00:59:59.999000</td>
+      <td>-3.34037e-05</td>
+      <td>-3.34037e-05</td>
+      <td>0.574539</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2870</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0150966</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-27 23:59:59.999000</td>
+      <td>2026-02-28 00:14:59.999000</td>
+      <td>2026-02-28 01:14:59.999000</td>
+      <td>5.71294e-05</td>
+      <td>5.71294e-05</td>
+      <td>0.574571</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2871</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0150966</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-28 00:14:59.999000</td>
+      <td>2026-02-28 00:29:59.999000</td>
+      <td>2026-02-28 01:29:59.999000</td>
+      <td>0.00190075</td>
+      <td>0.000533688</td>
+      <td>0.574878</td>
+      <td>{'notional': 1666666.6666666667, 'fee_cost': 0.0008333333333333334, 'slip_cost': 0.0003333333333333334, 'impact_cost': 0.00020039701193716843, 'total_cost': 0.0013670636786038352, 'dw_l1': 1.6666666666666667}</td>
+      <td>2872</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0148707</td>
+      <td>{'status': 'ok', 'obj': -0.10095673562335691}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-28 00:29:59.999000</td>
+      <td>2026-02-28 00:44:59.999000</td>
+      <td>2026-02-28 01:44:59.999000</td>
+      <td>0.00302958</td>
+      <td>0.00302958</td>
+      <td>0.57662</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2873</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0148707</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>ok</td>
+      <td>2026-02-28 00:44:59.999000</td>
+      <td>2026-02-28 00:59:59.999000</td>
+      <td>2026-02-28 01:59:59.999000</td>
+      <td>0.00247194</td>
+      <td>0.00247194</td>
+      <td>0.578045</td>
+      <td>{'notional': 0.0, 'fee_cost': 0.0, 'slip_cost': 0.0, 'impact_cost': 0.0, 'total_cost': 0.0, 'dw_l1': 0.0}</td>
+      <td>2874</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0148707</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.578045</td>
+      <td>NaN</td>
+      <td>2875</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0148707</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.578045</td>
+      <td>NaN</td>
+      <td>2876</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0144168</td>
+      <td>{'status': 'ok', 'obj': -0.09853027849685075}</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.578045</td>
+      <td>NaN</td>
+      <td>2877</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0144168</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.578045</td>
+      <td>NaN</td>
+      <td>2878</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0144168</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+    <tr>
+      <td>no_future</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.578045</td>
+      <td>NaN</td>
+      <td>2879</td>
+      <td>9</td>
+      <td>ret_1h</td>
+      <td>-0.0144168</td>
+      <td>{'status': 'skip'}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>Top factors (by |ICIR|)</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>factor</th>
+      <th>ic_mean</th>
+      <th>icir</th>
+      <th>ic_pos</th>
+      <th>n_ic</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>trend_align</td>
+      <td>-0.035412</td>
+      <td>-0.13925</td>
+      <td>0.425591</td>
+      <td>2876</td>
+    </tr>
+    <tr>
+      <td>macd_signal</td>
+      <td>-0.0258489</td>
+      <td>-0.0892137</td>
+      <td>0.450626</td>
+      <td>2876</td>
+    </tr>
+    <tr>
+      <td>bb_pos</td>
+      <td>-0.0233264</td>
+      <td>-0.0829433</td>
+      <td>0.459573</td>
+      <td>2857</td>
+    </tr>
+    <tr>
+      <td>z_score_20</td>
+      <td>-0.0233201</td>
+      <td>-0.0829209</td>
+      <td>0.459573</td>
+      <td>2857</td>
+    </tr>
+    <tr>
+      <td>taker_ratio</td>
+      <td>-0.0175468</td>
+      <td>-0.0729772</td>
+      <td>0.470097</td>
+      <td>2876</td>
+    </tr>
+    <tr>
+      <td>ret_1h</td>
+      <td>-0.0193235</td>
+      <td>-0.0684271</td>
+      <td>0.460439</td>
+      <td>2869</td>
+    </tr>
+    <tr>
+      <td>rsi_14_1h</td>
+      <td>-0.011997</td>
+      <td>-0.0415688</td>
+      <td>0.488323</td>
+      <td>2869</td>
+    </tr>
+    <tr>
+      <td>ret_4h</td>
+      <td>-0.00634622</td>
+      <td>-0.0217524</td>
+      <td>0.488974</td>
+      <td>2857</td>
+    </tr>
+    <tr>
+      <td>vol_ratio</td>
+      <td>0.00162903</td>
+      <td>0.00660255</td>
+      <td>0.504375</td>
+      <td>2857</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>Strategy Pool Scores</h2>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>name</th>
+      <th>active</th>
+      <th>weight</th>
+      <th>score</th>
+      <th>n</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cs_factor_0</td>
+      <td>True</td>
+      <td>1</td>
+      <td>-0.207264</td>
+      <td>192</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</body></html>
