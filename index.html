@@ -1,0 +1,192 @@
+<!doctype html><html><head><meta charset="utf-8"/>
+<title>Factor Lab Pro — Runs</title>
+<style>
+*{box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial;margin:0;padding:24px;background:#f4f6f8;color:#222;}
+h1{font-size:22px;margin-bottom:4px;}
+.subtitle{color:#666;font-size:13px;margin-bottom:24px;}
+.cards{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:28px;}
+.card{background:#fff;border-radius:10px;padding:16px 22px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:150px;}
+.card .label{font-size:12px;color:#888;margin-bottom:4px;}
+.card .value{font-size:24px;font-weight:700;}
+.card .value.pos{color:#16a34a;}
+.card .value.neg{color:#dc2626;}
+.chart-wrap{background:#fff;border-radius:10px;padding:20px 24px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:28px;}
+.chart-wrap h2{font-size:15px;margin:0 0 12px;color:#444;}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+th,td{border-bottom:1px solid #eee;padding:9px 12px;font-size:13px;text-align:left;}
+th{background:#f7f9fb;font-weight:600;color:#555;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#fafbfc;}
+a{color:#2563eb;text-decoration:none;}
+a:hover{text-decoration:underline;}
+.badge{display:inline-block;padding:2px 8px;border-radius:9999px;font-size:12px;font-weight:600;}
+.badge.pos{background:#dcfce7;color:#16a34a;}
+.badge.neg{background:#fee2e2;color:#dc2626;}
+</style></head><body>
+<h1>🧪 Factor Lab Pro</h1>
+<p class="subtitle">Updated 2026-05-13 20:14 &nbsp;·&nbsp; Latest 10 runs</p>
+
+<!-- Summary cards -->
+<div class="cards">
+  <div class="card">
+    <div class="label">最新收益</div>
+    <div class="value pos">+0.69%</div>
+  </div>
+  <div class="card">
+    <div class="label">近10次最优</div>
+    <div class="value pos">+3.56%</div>
+  </div>
+  <div class="card">
+    <div class="label">最新胜率</div>
+    <div class="value pos">57.1%</div>
+  </div>
+  <div class="card">
+    <div class="label">最新主力因子</div>
+    <div class="value" style="font-size:14px;padding-top:4px;">skewness_60_1h</div>
+  </div>
+</div>
+
+<!-- Inline SVG line chart — no CDN dependency -->
+<div class="chart-wrap">
+  <h2>📈 近10次回测收益率趋势</h2>
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 800 180" style="overflow:visible">
+  <line x1="52" y1="68.5" x2="784" y2="68.5" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4,3"/>
+  <path d="M 52.0 68.5 L 52.0 128.8 L 133.3 71.2 L 214.7 59.2 L 296.0 42.9 L 377.3 49.0 L 458.7 37.1 L 540.0 36.7 L 621.3 46.1 L 702.7 27.2 L 784.0 60.5 L 784.0 68.5 Z" fill="rgba(37,99,235,.07)" stroke="none"/>
+  <polyline points="52.0,128.8 133.3,71.2 214.7,59.2 296.0,42.9 377.3,49.0 458.7,37.1 540.0,36.7 621.3,46.1 702.7,27.2 784.0,60.5" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="52.0" cy="128.8" r="5" fill="#dc2626" stroke="#fff" stroke-width="1.5"><title>05-09 08:00: -5.20%</title></circle>
+  <circle cx="133.3" cy="71.2" r="5" fill="#dc2626" stroke="#fff" stroke-width="1.5"><title>05-09 20:00: -0.23%</title></circle>
+  <circle cx="214.7" cy="59.2" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-10 08:00: +0.81%</title></circle>
+  <circle cx="296.0" cy="42.9" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-10 20:00: +2.21%</title></circle>
+  <circle cx="377.3" cy="49.0" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-11 08:00: +1.68%</title></circle>
+  <circle cx="458.7" cy="37.1" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-11 20:00: +2.71%</title></circle>
+  <circle cx="540.0" cy="36.7" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-12 08:00: +2.75%</title></circle>
+  <circle cx="621.3" cy="46.1" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-12 20:00: +1.93%</title></circle>
+  <circle cx="702.7" cy="27.2" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-13 08:00: +3.56%</title></circle>
+  <circle cx="784.0" cy="60.5" r="5" fill="#16a34a" stroke="#fff" stroke-width="1.5"><title>05-13 20:00: +0.69%</title></circle>
+  <text x="52.0" y="162" text-anchor="middle" font-size="10" fill="#888">05-09 08</text>
+  <text x="133.3" y="162" text-anchor="middle" font-size="10" fill="#888">05-09 20</text>
+  <text x="214.7" y="162" text-anchor="middle" font-size="10" fill="#888">05-10 08</text>
+  <text x="296.0" y="162" text-anchor="middle" font-size="10" fill="#888">05-10 20</text>
+  <text x="377.3" y="162" text-anchor="middle" font-size="10" fill="#888">05-11 08</text>
+  <text x="458.7" y="162" text-anchor="middle" font-size="10" fill="#888">05-11 20</text>
+  <text x="540.0" y="162" text-anchor="middle" font-size="10" fill="#888">05-12 08</text>
+  <text x="621.3" y="162" text-anchor="middle" font-size="10" fill="#888">05-12 20</text>
+  <text x="702.7" y="162" text-anchor="middle" font-size="10" fill="#888">05-13 08</text>
+  <text x="784.0" y="162" text-anchor="middle" font-size="10" fill="#888">05-13 20</text>
+  <line x1="48" y1="144.0" x2="52" y2="144.0" stroke="#ccc"/>
+  <text x="45" y="148.0" text-anchor="end" font-size="10" fill="#888">-6.5%</text>
+  <line x1="48" y1="78.0" x2="52" y2="78.0" stroke="#ccc"/>
+  <text x="45" y="82.0" text-anchor="end" font-size="10" fill="#888">-0.8%</text>
+  <line x1="48" y1="12.0" x2="52" y2="12.0" stroke="#ccc"/>
+  <text x="45" y="16.0" text-anchor="end" font-size="10" fill="#888">+4.9%</text>
+  <rect x="52" y="12" width="732" height="132" fill="none" stroke="#eee" stroke-width="1" rx="2"/>
+</svg>
+</div>
+
+<!-- Runs table -->
+<table>
+<tr><th>Run ID</th><th>时间</th><th>收益率</th><th>胜率</th><th>主力因子</th><th>有效交易</th><th>报告</th></tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260513_200005</td>
+<td style="color:#666;">05-13 20:00</td>
+<td><span class="badge pos">+0.69%</span></td>
+<td>57.1%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>14</td>
+<td><a href="20260513_200005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260513_080005</td>
+<td style="color:#666;">05-13 08:00</td>
+<td><span class="badge pos">+3.56%</span></td>
+<td>59.3%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>27</td>
+<td><a href="20260513_080005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260512_200005</td>
+<td style="color:#666;">05-12 20:00</td>
+<td><span class="badge pos">+1.93%</span></td>
+<td>56.2%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>16</td>
+<td><a href="20260512_200005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260512_080005</td>
+<td style="color:#666;">05-12 08:00</td>
+<td><span class="badge pos">+2.74%</span></td>
+<td>55.6%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>27</td>
+<td><a href="20260512_080005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260511_200005</td>
+<td style="color:#666;">05-11 20:00</td>
+<td><span class="badge pos">+2.71%</span></td>
+<td>44.0%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>25</td>
+<td><a href="20260511_200005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260511_080005</td>
+<td style="color:#666;">05-11 08:00</td>
+<td><span class="badge pos">+1.68%</span></td>
+<td>57.1%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>28</td>
+<td><a href="20260511_080005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260510_200005</td>
+<td style="color:#666;">05-10 20:00</td>
+<td><span class="badge pos">+2.21%</span></td>
+<td>33.3%</td>
+<td style="font-size:12px;color:#555;">skew_96_1h</td>
+<td>15</td>
+<td><a href="20260510_200005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260510_080005</td>
+<td style="color:#666;">05-10 08:00</td>
+<td><span class="badge pos">+0.81%</span></td>
+<td>50.0%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>28</td>
+<td><a href="20260510_080005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260509_200005</td>
+<td style="color:#666;">05-09 20:00</td>
+<td><span class="badge neg">-0.23%</span></td>
+<td>47.1%</td>
+<td style="font-size:12px;color:#555;">skewness_60_1h</td>
+<td>17</td>
+<td><a href="20260509_200005/report.html">查看</a></td>
+</tr>
+
+<tr>
+<td style="font-family:monospace;font-size:12px;">20260509_080005</td>
+<td style="color:#666;">05-09 08:00</td>
+<td><span class="badge neg">-5.20%</span></td>
+<td>12.5%</td>
+<td style="font-size:12px;color:#555;">price_to_ema_300_15m</td>
+<td>8</td>
+<td><a href="20260509_080005/report.html">查看</a></td>
+</tr>
+
+</table>
+</body></html>
